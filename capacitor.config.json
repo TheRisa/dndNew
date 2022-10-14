@@ -1,0 +1,6 @@
+{
+	"appId": "io.ionic.starter",
+	"appName": "dndNew",
+	"webDir": "www",
+	"bundledWebRuntime": false
+}
