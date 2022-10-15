@@ -4,6 +4,11 @@
   <p class="name">{{ personaggio.nome }}</p>
   <!-- Riga di pulsanti -->
   <div class="buttonRow">
+    <!-- Aggiungi effetto -->
+    <ion-button (click)="homeSrvc.completaTurno()" color="light"
+      >Aggiungi effetto?</ion-button
+    >
+    <!-- Completa turno -->
     <ion-button (click)="homeSrvc.completaTurno()" color="warning"
       >Completa Turno</ion-button
     >

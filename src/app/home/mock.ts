@@ -3,18 +3,18 @@ import { DettagliPersonaggio } from './home.models';
 /** Mock per personaggi da mostrare */
 export const mockPersonaggi: DettagliPersonaggio[] = [
   {
-    nome: 'Aratax',
-    perc: 50,
-    percPerTurno: 60
-  },
-  {
     nome: 'Hirkit',
-    perc: 73,
+    perc: 128,
     percPerTurno: 55
   },
   {
+    nome: 'Aratax',
+    perc: 110,
+    percPerTurno: 60
+  },
+  {
     nome: 'Artemisia',
-    perc: 41,
+    perc: 62,
     percPerTurno: 21
   }
 ];

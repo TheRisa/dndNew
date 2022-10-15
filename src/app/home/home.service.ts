@@ -78,6 +78,13 @@ export class HomeService {
   }
 
   /**
+   * Metodo di salvataggio della situazione attuale
+   */
+  public salva(): void {
+    console.log(this.personaggi);
+  }
+
+  /**
    * Metodo per riordinare i personaggi in ordine decrescente di perc
    */
   private riordinaPersonaggi(): void {
