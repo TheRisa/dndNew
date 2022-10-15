@@ -35,7 +35,10 @@
       }"
     ></div>
     <!-- Stringa di % -->
-    <div class="percAlign">
+    <div
+      class="percAlign"
+      [ngStyle]="{ top: dettagli.perc === 0 ? '5px' : '-25px' }"
+    >
       <input
         class="percInput no-margin"
         [(ngModel)]="dettagli.perc"

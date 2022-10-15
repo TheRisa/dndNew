@@ -2,6 +2,9 @@
 <ion-content [fullscreen]="true">
   <!-- Container generico -->
   <div class="container">
+    <!-- Barra azioni -->
+    <app-barra-azioni></app-barra-azioni>
+
     <!-- Lista dei personaggi -->
     <app-dominio-personaggio
       *ngFor="let personaggio of homeSrvc.personaggi; let indiceDominio = index"

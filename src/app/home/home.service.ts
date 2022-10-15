@@ -61,6 +61,23 @@ export class HomeService {
   }
 
   /**
+   * Metodo che attiva il round successivo
+   */
+  public nextRound(): void {
+    this.personaggi.forEach((personaggio) => {
+      // Aggiorno la perc
+      personaggio.perc = personaggio.perc + personaggio.percPerTurno;
+      // Se la perc è > 200 la riporto a 200
+      if (personaggio.perc > 200) {
+        personaggio.perc = 200;
+      }
+    });
+
+    // Riordino i personaggi
+    this.riordinaPersonaggi();
+  }
+
+  /**
    * Metodo per riordinare i personaggi in ordine decrescente di perc
    */
   private riordinaPersonaggi(): void {
