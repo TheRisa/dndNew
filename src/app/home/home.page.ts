@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { mockPersonaggi } from './mock';
+
+import { HomeService } from './home.service';
 
 /** Classe per la gestione di home */
 @Component({
@@ -8,13 +9,12 @@ import { mockPersonaggi } from './mock';
   styleUrls: ['home.page.scss']
 })
 export class HomePage implements OnInit {
-  /** Lista dei personaggi da mostrare */
-  public personaggi = mockPersonaggi;
-
   /**
    * Costruttore della classe
+   *
+   * @param homeSrvc Istanza di HomeService
    */
-  constructor() {}
+  constructor(public homeSrvc: HomeService) {}
 
   /**
    * Metodo onInit

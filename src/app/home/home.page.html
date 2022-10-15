@@ -4,8 +4,9 @@
   <div class="container">
     <!-- Lista dei personaggi -->
     <app-dominio-personaggio
-      *ngFor="let personaggio of personaggi"
+      *ngFor="let personaggio of homeSrvc.personaggi; let indiceDominio = index"
       [dettagli]="personaggio"
+      [indice]="indiceDominio"
     ></app-dominio-personaggio>
   </div>
 </ion-content>

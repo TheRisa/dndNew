@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 
 import { DettagliPersonaggio } from '../home.models';
+import { HomeService } from '../home.service';
 
 /** Classe per la gestione di DominioPersonaggioComponent */
 @Component({
@@ -10,12 +11,20 @@ import { DettagliPersonaggio } from '../home.models';
 })
 export class DominioPersonaggioComponent implements OnInit {
   /** Dettagli da mostrare */
-  @Input() dettagli: DettagliPersonaggio = { nome: 'Aratax', perc: 80 };
+  @Input() dettagli: DettagliPersonaggio = {
+    nome: '',
+    perc: 0,
+    percPerTurno: 0
+  };
+  /** Indice del dominio */
+  @Input() indice = -1;
 
   /**
    * Costruttore della classe
+   *
+   * @param homeSrvc Istanza di HomeService
    */
-  constructor() {}
+  constructor(public homeSrvc: HomeService) {}
 
   /**
    * Metodo onInit
@@ -27,7 +36,9 @@ export class DominioPersonaggioComponent implements OnInit {
    *
    * @param incremento Flag per indicare un incremento o decremento
    */
-  public cambiaPerc(incremento: boolean): void {
+  public cambiaPerc(event: any, incremento: boolean): void {
+    // Blocco altri click
+    event.stopPropagation();
     // Aggiorno perc di 10 in 10
     this.dettagli.perc = incremento
       ? this.dettagli.perc + 10

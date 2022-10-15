@@ -1,5 +1,9 @@
 <!-- Content -->
-<div class="content">
+<div
+  class="content"
+  (click)="homeSrvc.setPersonaggioSelezionato(indice)"
+  [ngStyle]="{ 'background-color': dettagli.selected ? '#dd65a22e' : '' }"
+>
   <!-- Nome personaggio -->
   <p class="nome">{{ dettagli.nome }}</p>
   <!-- Percentuale rapidità -->
@@ -37,7 +41,11 @@
   </div>
   <!-- Button di gestione % -->
   <div class="buttons">
-    <ion-button (click)="cambiaPerc(true)">+</ion-button>
-    <ion-button (click)="cambiaPerc(false)">-</ion-button>
+    <ion-button (click)="cambiaPerc($event, true)" color="success"
+      >+</ion-button
+    >
+    <ion-button (click)="cambiaPerc($event, false)" color="danger"
+      >-</ion-button
+    >
   </div>
 </div>
