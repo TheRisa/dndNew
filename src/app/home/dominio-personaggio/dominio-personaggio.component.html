@@ -1,14 +1,43 @@
 <!-- Content -->
 <div class="content">
   <!-- Nome personaggio -->
-  <p class="nome">Aratax</p>
+  <p class="nome">{{ dettagli.nome }}</p>
   <!-- Percentuale rapidità -->
-  <div class="percBar">
-    <p class="perc">100%</p>
+  <div
+    class="percBarContainer"
+    [ngStyle]="{ 'background-color': calcolaBackground() }"
+  >
+    <!-- Gestione barra per percentuali positive -->
+    <div
+      *ngIf="dettagli.perc > 0"
+      class="percBar"
+      [ngStyle]="{
+        width: (dettagli.perc % 100) + '%',
+        'background-color': dettagli.perc > 100 ? '#8af58a' : '#efef74'
+      }"
+    ></div>
+    <!-- Gestione barra per percentuali negative -->
+    <div
+      *ngIf="dettagli.perc < 0"
+      class="percBar"
+      [ngStyle]="{
+        width: (-dettagli.perc % 100) + '%',
+        'background-color': dettagli.perc < -100 ? '#eb7676' : '#f7ce83'
+      }"
+    ></div>
+    <!-- Stringa di % -->
+    <div class="percAlign">
+      <input
+        class="percInput no-margin"
+        [(ngModel)]="dettagli.perc"
+        type="number"
+      />
+      <p class="no-margin">%</p>
+    </div>
   </div>
   <!-- Button di gestione % -->
   <div class="buttons">
-    <ion-button>+</ion-button>
-    <ion-button>-</ion-button>
+    <ion-button (click)="cambiaPerc(true)">+</ion-button>
+    <ion-button (click)="cambiaPerc(false)">-</ion-button>
   </div>
 </div>

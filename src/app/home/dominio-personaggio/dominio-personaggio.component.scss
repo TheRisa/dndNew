@@ -8,20 +8,37 @@
 }
 
 .nome {
-  max-width: 30%;
+  width: 20%;
+}
+
+.percBarContainer {
+  width: 50%;
+  height: 30px;
+  position: relative;
+  border-radius: 5px;
 }
 
 .percBar {
-  width: 300px;
   height: 30px;
-  background-color: coral;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  border-radius: 5px;
 }
 
-.perc {
-  width: 100%;
-  margin: 0;
-  text-align: center;
+.percAlign {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  position: relative;
+  top: -25px;
+  left: 40%;
+}
+
+.percInput {
+  width: 40px;
+  background: none;
+  border: none;
+  text-align: end;
+}
+
+.buttons {
+  width: 20%;
 }

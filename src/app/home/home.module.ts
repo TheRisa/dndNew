@@ -10,6 +10,6 @@ import { DominioPersonaggioComponent } from './dominio-personaggio/dominio-perso
 
 @NgModule({
   imports: [CommonModule, FormsModule, IonicModule, HomePageRoutingModule],
-  declarations: [HomePage, DominioPersonaggioComponent],
+  declarations: [HomePage, DominioPersonaggioComponent]
 })
 export class HomePageModule {}

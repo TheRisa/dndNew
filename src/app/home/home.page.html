@@ -1,5 +1,11 @@
+<!-- Content -->
 <ion-content [fullscreen]="true">
+  <!-- Container generico -->
   <div class="container">
-    <app-dominio-personaggio></app-dominio-personaggio>
+    <!-- Lista dei personaggi -->
+    <app-dominio-personaggio
+      *ngFor="let personaggio of personaggi"
+      [dettagli]="personaggio"
+    ></app-dominio-personaggio>
   </div>
 </ion-content>
