@@ -1,7 +1,82 @@
 <!-- Container -->
 <div class="container default-black" *ngIf="personaggio">
-  <!-- Nome -->
-  <p class="name">{{ personaggio.nome }}</p>
+  <!-- Nome e abilità -->
+  <div class="nomeContainer">
+    <!-- Abilità base -->
+    <div
+      class="abilitaContent"
+      *ngIf="personaggio.abilita && personaggio.abilita.length > 0"
+    >
+      <div
+        class="abilitaContainer hover"
+        *ngFor="let abilita of personaggio.abilita[0]"
+        (click)="gestisciCdAbilita(abilita)"
+      >
+        <!-- Pallino per disponibilità -->
+        <div
+          class="abilita"
+          *ngIf="calcolaColore(abilita)"
+          [ngStyle]="{ 'background-color': calcolaColore(abilita) }"
+        ></div>
+        <!-- Turni di attesa rimasti -->
+        <p
+          *ngIf="!calcolaColore(abilita)"
+          class="no-margin"
+          style="color: #f7ce83"
+        >
+          {{ abilita.turniAttesa }}
+        </p>
+      </div>
+    </div>
+    <!-- Nome -->
+    <p class="name">{{ personaggio.nome }}</p>
+    <!-- Abilità immediate -->
+    <div
+      class="abilitaContent"
+      *ngIf="personaggio.abilita && personaggio.abilita.length > 1"
+    >
+      <div
+        class="abilitaContainer hover"
+        *ngFor="let abilita of personaggio.abilita[1]"
+        (click)="gestisciCdAbilita(abilita)"
+      >
+        <!-- Pallino per disponibilità -->
+        <div
+          class="abilita"
+          *ngIf="calcolaColore(abilita)"
+          [ngStyle]="{ 'background-color': calcolaColore(abilita) }"
+        ></div>
+        <!-- Turni di attesa rimasti -->
+        <p
+          *ngIf="!calcolaColore(abilita)"
+          class="no-margin"
+          style="color: #f7ce83"
+        >
+          {{ abilita.turniAttesa }}
+        </p>
+      </div>
+    </div>
+    <!-- Separtore -->
+    <div *ngIf="personaggio.abilita && personaggio.abilita.length > 2">|</div>
+    <!-- Abilità incontro -->
+    <div
+      class="abilitaContent"
+      *ngIf="personaggio.abilita && personaggio.abilita.length > 2"
+    >
+      <div
+        class="abilitaContainer hover"
+        *ngFor="let abilita of personaggio.abilita[2]"
+        (click)="gestisciCdAbilita(abilita)"
+      >
+        <!-- Pallino per disponibilità -->
+        <div
+          class="abilita"
+          *ngIf="calcolaColore(abilita)"
+          [ngStyle]="{ 'background-color': calcolaColore(abilita) }"
+        ></div>
+      </div>
+    </div>
+  </div>
   <!-- Effetti attivi & stats -->
   <div class="body">
     <!-- Stats -->

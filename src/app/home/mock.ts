@@ -53,6 +53,73 @@ export const mockPersonaggi: DettagliPersonaggio[] = [
         descrizione: 'Bonus crit',
         valore: 10
       }
+    ],
+    abilita: [
+      [
+        {
+          cd: 3,
+          incontro: false,
+          turniAttesa: 0
+        },
+        {
+          cd: 2,
+          incontro: false,
+          turniAttesa: 1
+        },
+        {
+          cd: 1,
+          incontro: false,
+          turniAttesa: 0
+        },
+        {
+          cd: 1,
+          incontro: false,
+          turniAttesa: 0,
+          bloccata: true
+        },
+        {
+          cd: 1,
+          incontro: false,
+          turniAttesa: 0,
+          bloccata: true
+        }
+      ],
+      [
+        {
+          cd: 3,
+          incontro: false,
+          turniAttesa: 2
+        },
+        {
+          cd: 1,
+          incontro: true,
+          turniAttesa: 0
+        },
+        {
+          cd: 1,
+          incontro: false,
+          turniAttesa: 0,
+          bloccata: true
+        }
+      ],
+      [
+        {
+          cd: 1,
+          incontro: true,
+          turniAttesa: 1
+        },
+        {
+          cd: 1,
+          incontro: true,
+          turniAttesa: 0
+        },
+        {
+          cd: 1,
+          incontro: true,
+          turniAttesa: 0,
+          bloccata: true
+        }
+      ]
     ]
   },
   {
@@ -65,13 +132,15 @@ export const mockPersonaggi: DettagliPersonaggio[] = [
         durata: 2
       }
     ],
-    statistiche: []
+    statistiche: [],
+    abilita: []
   },
   {
     nome: 'Artemisia',
     perc: 62,
     percPerTurno: 21,
     effettiAttivi: [],
-    statistiche: []
+    statistiche: [],
+    abilita: []
   }
 ];

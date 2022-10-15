@@ -17,6 +17,7 @@ export interface DettagliPersonaggio {
     descrizione: string;
     valore: number;
   }[];
+  abilita: Abilita[][];
   selected?: boolean;
 }
 
@@ -24,4 +25,12 @@ export interface DettagliPersonaggio {
 export interface Effetto {
   descrizione: string;
   durata: number;
+}
+
+/** Interfaccia per le abilità */
+export interface Abilita {
+  cd: number;
+  turniAttesa: number;
+  incontro: boolean;
+  bloccata?: boolean;
 }

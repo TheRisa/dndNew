@@ -65,6 +65,20 @@ export class HomeService {
         (effetto) => effetto.durata > 0
       );
 
+      // Aggiorno i cd delle abilità
+      personaggio.abilita.forEach((tipoAbilita) => {
+        tipoAbilita.forEach((abilita) => {
+          // Se è un'abilità bloccata o a incontro non devo toccare il cd attuale
+          if (abilita.bloccata || abilita.incontro) {
+            return;
+          }
+
+          // Abbasso di 1 il cd (minimo 0)
+          abilita.turniAttesa =
+            abilita.turniAttesa > 0 ? abilita.turniAttesa - 1 : 0;
+        });
+      });
+
       // Riordino i personaggi
       this.riordinaPersonaggi();
     }
