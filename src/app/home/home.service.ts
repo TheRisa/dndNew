@@ -1,6 +1,6 @@
 import { Injectable, Input } from '@angular/core';
 
-import { DettagliPersonaggio } from './home.models';
+import { DettagliPersonaggio, Effetto } from './home.models';
 
 import { mockPersonaggi } from './mock';
 
@@ -55,6 +55,16 @@ export class HomeService {
       if (personaggio.perc < -200) {
         personaggio.perc = -200;
       }
+
+      // Riduco di 1 turno gli effetti attivi
+      personaggio.effettiAttivi.forEach(
+        (effetto) => (effetto.durata = effetto.durata - 1)
+      );
+      // Rimuovo effetti terminati
+      personaggio.effettiAttivi = personaggio.effettiAttivi.filter(
+        (effetto) => effetto.durata > 0
+      );
+
       // Riordino i personaggi
       this.riordinaPersonaggi();
     }
@@ -75,6 +85,15 @@ export class HomeService {
 
     // Riordino i personaggi
     this.riordinaPersonaggi();
+  }
+
+  /**
+   * Aggiunge un effetto all'elence degli effetti attivi del personaggio selezionato
+   *
+   * @param effetto Effetto da aggiungere
+   */
+  public aggiungiEffetto(effetto: Effetto): void {
+    this.getPersonaggioSelezionato().effettiAttivi.push(effetto);
   }
 
   /**

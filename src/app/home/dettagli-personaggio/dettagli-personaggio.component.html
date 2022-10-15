@@ -1,15 +1,105 @@
 <!-- Container -->
-<div class="container" *ngIf="personaggio">
+<div class="container default-black" *ngIf="personaggio">
   <!-- Nome -->
   <p class="name">{{ personaggio.nome }}</p>
+  <!-- Effetti attivi & stats -->
+  <div class="body">
+    <!-- Stats -->
+    <div class="half-body">
+      <!-- Titolo -->
+      <p class="title">Statistiche</p>
+      <!-- Statistiche nascoste -->
+      <p
+        style="width: 100%; text-align: center"
+        *ngIf="personaggio.statistiche.length === 0"
+      >
+        Statistiche non disponibili
+      </p>
+      <!-- Statitica -->
+      <div class="statisticaContainer">
+        <div class="statistica" *ngFor="let stat of personaggio.statistiche">
+          <p>{{ stat.descrizione }}</p>
+          <input class="enterValue" type="number" [(ngModel)]="stat.valore" />
+        </div>
+      </div>
+    </div>
+    <!-- Effetti attivi -->
+    <div class="half-body">
+      <!-- Titolo -->
+      <p class="title">
+        Effetti attivi
+        <ion-button color="light" id="open-modal" expand="block">+</ion-button>
+        <!-- Modale inline per aggiunta effetto -->
+        <ion-modal
+          class="modal"
+          trigger="open-modal"
+          (willDismiss)="onWillDismiss($event)"
+        >
+          <ng-template>
+            <ion-content class="ion-padding contentModale">
+              <!-- Descrizione effetto -->
+              <ion-item style="width: 95%; padding: 20px 0 0 5%">
+                <ion-label position="stacked">Effetto</ion-label>
+                <ion-input
+                  type="text"
+                  placeholder="Descrizione effetto"
+                  [(ngModel)]="descrizioneEffetto"
+                ></ion-input>
+              </ion-item>
+              <!-- Durata effetto -->
+              <ion-item style="width: 95%; padding: 20px 0 0 5%">
+                <ion-label position="stacked">Durata</ion-label>
+                <ion-input
+                  type="text"
+                  type="number"
+                  placeholder="Durata effetto"
+                  [(ngModel)]="durataEffetto"
+                ></ion-input>
+              </ion-item>
+              <!-- Pulsanti chiusura modale -->
+              <div class="buttonRowModale">
+                <ion-button (click)="confirm()" color="dark"
+                  >Conferma</ion-button
+                >
+              </div>
+            </ion-content>
+          </ng-template>
+        </ion-modal>
+      </p>
+      <!-- Nessun effetto -->
+      <p
+        style="width: 100%; text-align: center"
+        *ngIf="personaggio.effettiAttivi.length === 0"
+      >
+        Nessun effetto attivo al momento
+      </p>
+      <!-- Effetto -->
+      <div
+        class="effetto"
+        *ngFor="
+          let effetto of personaggio.effettiAttivi;
+          let indiceEffetto = index
+        "
+      >
+        <p class="no-margin">{{ effetto.descrizione }}</p>
+        <div class="durata">
+          <p class="no-margin" style="text-align: end">
+            {{ effetto.durata }} round
+          </p>
+          <ion-button
+            color="danger"
+            (click)="rimuoviEffetto(indiceEffetto)"
+            style="margin-left: 10px"
+            >-</ion-button
+          >
+        </div>
+      </div>
+    </div>
+  </div>
   <!-- Riga di pulsanti -->
   <div class="buttonRow">
-    <!-- Aggiungi effetto -->
-    <ion-button (click)="homeSrvc.completaTurno()" color="light"
-      >Aggiungi effetto?</ion-button
-    >
     <!-- Completa turno -->
-    <ion-button (click)="homeSrvc.completaTurno()" color="warning"
+    <ion-button (click)="homeSrvc.completaTurno()" color="dark"
       >Completa Turno</ion-button
     >
   </div>

@@ -14,7 +14,9 @@ export class DominioPersonaggioComponent implements OnInit {
   @Input() dettagli: DettagliPersonaggio = {
     nome: '',
     perc: 0,
-    percPerTurno: 0
+    percPerTurno: 0,
+    effettiAttivi: [],
+    statistiche: []
   };
   /** Indice del dominio */
   @Input() indice = -1;
