@@ -8,5 +8,10 @@
       [dettagli]="personaggio"
       [indice]="indiceDominio"
     ></app-dominio-personaggio>
+
+    <!-- Dettagli personaggio selezionato -->
+    <app-dettagli-personaggio
+      [personaggio]="homeSrvc.getPersonaggioSelezionato()"
+    ></app-dettagli-personaggio>
   </div>
 </ion-content>

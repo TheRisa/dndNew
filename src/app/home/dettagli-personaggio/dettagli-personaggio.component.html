@@ -1,0 +1,11 @@
+<!-- Container -->
+<div class="container" *ngIf="personaggio">
+  <!-- Nome -->
+  <p class="name">{{ personaggio.nome }}</p>
+  <!-- Riga di pulsanti -->
+  <div class="buttonRow">
+    <ion-button (click)="homeSrvc.completaTurno()" color="warning"
+      >Completa Turno</ion-button
+    >
+  </div>
+</div>

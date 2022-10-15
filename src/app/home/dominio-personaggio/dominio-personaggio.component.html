@@ -5,7 +5,12 @@
   [ngStyle]="{ 'background-color': dettagli.selected ? '#dd65a22e' : '' }"
 >
   <!-- Nome personaggio -->
-  <p class="nome">{{ dettagli.nome }}</p>
+  <p
+    class="nome"
+    [ngStyle]="{ 'font-weight': dettagli.selected ? 'bold' : '' }"
+  >
+    {{ dettagli.nome }}
+  </p>
   <!-- Percentuale rapidità -->
   <div
     class="percBarContainer"
