@@ -6,15 +6,19 @@
     <app-barra-azioni></app-barra-azioni>
 
     <!-- Lista dei personaggi -->
-    <app-dominio-personaggio
-      *ngFor="let personaggio of homeSrvc.personaggi; let indiceDominio = index"
-      [dettagli]="personaggio"
-      [indice]="indiceDominio"
-    ></app-dominio-personaggio>
+    <div class="containerDomini">
+      <app-dominio-personaggio
+        *ngFor="let personaggio of homeSrvc.personaggi; let indiceDominio = index"
+        [dettagli]="personaggio"
+        [indice]="indiceDominio"
+      ></app-dominio-personaggio>
+    </div>
 
     <!-- Dettagli personaggio selezionato -->
-    <app-dettagli-personaggio
-      [personaggio]="homeSrvc.getPersonaggioSelezionato()"
-    ></app-dettagli-personaggio>
+    <div class="containerDettagli">
+      <app-dettagli-personaggio
+        [personaggio]="homeSrvc.getPersonaggioSelezionato()"
+      ></app-dettagli-personaggio>
+    </div>
   </div>
 </ion-content>

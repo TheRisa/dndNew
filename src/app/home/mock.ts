@@ -150,6 +150,111 @@ export const mockPersonaggi: DettagliPersonaggio[] = [
     effettiAttivi: [],
     statistiche: [],
     abilita: []
+  },
+  {
+    nome: 'Aratax',
+    perc: 110,
+    percPerTurno: 60,
+    effettiAttivi: [
+      {
+        descrizione: 'rallentamento, -2 vel',
+        durata: 2
+      }
+    ],
+    statistiche: [],
+    abilita: []
+  },
+  {
+    nome: 'Artemisia',
+    perc: 62,
+    percPerTurno: 21,
+    effettiAttivi: [],
+    statistiche: [],
+    abilita: []
+  },
+  {
+    nome: 'Aratax',
+    perc: 110,
+    percPerTurno: 60,
+    effettiAttivi: [
+      {
+        descrizione: 'rallentamento, -2 vel',
+        durata: 2
+      }
+    ],
+    statistiche: [],
+    abilita: []
+  },
+  {
+    nome: 'Artemisia',
+    perc: 62,
+    percPerTurno: 21,
+    effettiAttivi: [],
+    statistiche: [],
+    abilita: []
+  },
+  {
+    nome: 'Aratax',
+    perc: 110,
+    percPerTurno: 60,
+    effettiAttivi: [
+      {
+        descrizione: 'rallentamento, -2 vel',
+        durata: 2
+      }
+    ],
+    statistiche: [],
+    abilita: []
+  },
+  {
+    nome: 'Artemisia',
+    perc: 62,
+    percPerTurno: 21,
+    effettiAttivi: [],
+    statistiche: [],
+    abilita: []
+  },
+  {
+    nome: 'Aratax',
+    perc: 110,
+    percPerTurno: 60,
+    effettiAttivi: [
+      {
+        descrizione: 'rallentamento, -2 vel',
+        durata: 2
+      }
+    ],
+    statistiche: [],
+    abilita: []
+  },
+  {
+    nome: 'Artemisia',
+    perc: 62,
+    percPerTurno: 21,
+    effettiAttivi: [],
+    statistiche: [],
+    abilita: []
+  },
+  {
+    nome: 'Aratax',
+    perc: 110,
+    percPerTurno: 60,
+    effettiAttivi: [
+      {
+        descrizione: 'rallentamento, -2 vel',
+        durata: 2
+      }
+    ],
+    statistiche: [],
+    abilita: []
+  },
+  {
+    nome: 'Artemisia',
+    perc: 62,
+    percPerTurno: 21,
+    effettiAttivi: [],
+    statistiche: [],
+    abilita: []
   }
 ];
 

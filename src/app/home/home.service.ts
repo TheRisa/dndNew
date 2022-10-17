@@ -15,7 +15,9 @@ export class HomeService {
   /**
    * Costruttore della classe
    */
-  constructor() {}
+  constructor() {
+    this.riordinaPersonaggi();
+  }
 
   /**
    * Getter dell'indice del personaggio selezionato
