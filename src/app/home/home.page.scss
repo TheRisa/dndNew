@@ -4,3 +4,17 @@
   padding-right: 20%;
   width: 100%;
 }
+
+@media screen and (max-width: 992px) {
+  .container {
+    padding-left: 10%;
+    padding-right: 10%;
+  }
+}
+
+@media screen and (max-width: 720px) {
+  .container {
+    padding-left: 5%;
+    padding-right: 5%;
+  }
+}

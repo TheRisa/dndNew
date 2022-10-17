@@ -26,8 +26,8 @@ export const mockPersonaggi: DettagliPersonaggio[] = [
         valore: 2
       },
       {
-        descrizione: 'Bonus cure',
-        valore: 2
+        descrizione: 'Rage',
+        valore: 10
       },
       {
         descrizione: 'Durabilità',
@@ -38,19 +38,27 @@ export const mockPersonaggi: DettagliPersonaggio[] = [
         valore: 2
       },
       {
-        descrizione: 'Bonus danno',
+        descrizione: 'Danno',
         valore: -1
       },
       {
-        descrizione: 'Bonus TxC',
+        descrizione: 'Cure',
+        valore: 4
+      },
+      {
+        descrizione: 'TxC',
         valore: 2
       },
       {
-        descrizione: 'Bonus crit chance',
+        descrizione: 'Velocità',
+        valore: 6
+      },
+      {
+        descrizione: 'Crit chance',
         valore: 3
       },
       {
-        descrizione: 'Bonus crit',
+        descrizione: 'Crit dmg',
         valore: 10
       }
     ],
