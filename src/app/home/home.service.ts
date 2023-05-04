@@ -10,7 +10,7 @@ import { mockPersonaggi } from './mock';
 })
 export class HomeService {
   /** Lista dei personaggi da mostrare */
-  public personaggi = mockPersonaggi;
+  public personaggi: DettagliPersonaggio[] = [];
 
   /**
    * Costruttore della classe
@@ -110,13 +110,6 @@ export class HomeService {
    */
   public aggiungiEffetto(effetto: Effetto): void {
     this.getPersonaggioSelezionato().effettiAttivi.push(effetto);
-  }
-
-  /**
-   * Metodo di salvataggio della situazione attuale
-   */
-  public salva(): void {
-    console.log(this.personaggi);
   }
 
   /**

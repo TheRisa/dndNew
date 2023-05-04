@@ -1,15 +1,29 @@
 <!-- Container -->
 <div class="container default-black">
   <!-- Prossimo round -->
-  <ion-button color="light" class="button" (click)="homeSrvc.nextRound()"
+  <ion-button
+    color="light"
+    class="button"
+    (click)="homeSrvc.nextRound()"
+    [disabled]="homeSrvc.personaggi.length === 0"
     ><ion-icon name="play-forward-outline"></ion-icon
   ></ion-button>
   <!-- Export dati -->
-  <ion-button color="light" class="button" (click)="homeSrvc.salva()"
+  <ion-button color="light" class="button" (click)="salva()"
     ><ion-icon name="save-outline"></ion-icon
   ></ion-button>
-  <!-- Settings -->
-  <ion-button color="light" class="button"
-    ><ion-icon name="cog-outline"></ion-icon
+  <!-- Import dati -->
+  <input
+    hidden
+    #upload
+    type="file"
+    (change)="fileCaricato($event.target.files[0])"
+  />
+  <ion-button color="light" class="button" (click)="carica()"
+    ><ion-icon name="download-outline"></ion-icon
   ></ion-button>
+  <!-- Settings -TODO: -->
+  <!-- <ion-button color="light" class="button"
+    ><ion-icon name="cog-outline"></ion-icon
+  ></ion-button> -->
 </div>
