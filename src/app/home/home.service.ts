@@ -1,26 +1,23 @@
-import { Injectable, Input } from '@angular/core';
+import { Injectable } from '@angular/core';
 
 import { DettagliPersonaggio, Effetto } from './home.models';
-
-import { mockPersonaggi } from './mock';
 
 /** Classe per la gestione del service HomeService */
 @Injectable({
   providedIn: 'root'
 })
 export class HomeService {
+  // FIXME: rendimi private con getter e setter
   /** Lista dei personaggi da mostrare */
   public personaggi: DettagliPersonaggio[] = [];
 
   /**
    * Costruttore della classe
    */
-  constructor() {
-    this.riordinaPersonaggi();
-  }
+  constructor() {}
 
   /**
-   * Getter dell'indice del personaggio selezionato
+   * Getter del personaggio attualmente selezionato
    *
    * @returns Indice del personaggio selezionato
    */
@@ -29,7 +26,7 @@ export class HomeService {
   }
 
   /**
-   * Setter dell'indice del personaggio selezionato
+   * Setter del personaggio selezionato in base all'indice
    *
    * @param indice Indice del personaggio cliccato
    */
@@ -110,6 +107,21 @@ export class HomeService {
    */
   public aggiungiEffetto(effetto: Effetto): void {
     this.getPersonaggioSelezionato().effettiAttivi.push(effetto);
+  }
+
+  /**
+   * Metodo per il caricamento dei personaggi
+   *
+   * @param personaggi Dati dei personaggi da caricare
+   */
+  public caricapersonaggi(personaggi: DettagliPersonaggio[]) {
+    // Clonazione senza riferimento
+    this.personaggi = JSON.parse(JSON.stringify(personaggi));
+    // Preseleziono il primo dopo averli ordinati
+    if (this.personaggi.length > 0) {
+      this.riordinaPersonaggi();
+      this.personaggi[0].selected = true;
+    }
   }
 
   /**

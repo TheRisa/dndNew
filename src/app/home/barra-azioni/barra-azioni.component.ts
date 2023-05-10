@@ -45,8 +45,8 @@ export class BarraAzioniComponent implements OnInit {
         const dati: { dati: DettagliPersonaggio[] } = JSON.parse(
           `${fileReader.result}`
         );
-        if (dati) {
-          this.homeSrvc.personaggi = dati.dati;
+        if (dati && dati.dati) {
+          this.homeSrvc.caricapersonaggi(dati.dati);
         }
       } catch (e) {
         console.error('Errore nel parsing dei dati');
@@ -59,10 +59,22 @@ export class BarraAzioniComponent implements OnInit {
    * Metodo di salvataggio dei dati attuali (apre tab da cui copiare i dati)
    */
   public salva(): void {
-    const tab = window.open('about:blank', '_blank');
-    tab.document.write(
-      `<p>${JSON.stringify({ dati: this.homeSrvc.personaggi })}</p>`
-    );
-    tab.document.close();
+    console.log(JSON.stringify({ dati: this.homeSrvc.personaggi }));
+    const selBox = document.createElement('textarea');
+    selBox.style.position = 'fixed';
+    selBox.style.left = '0';
+    selBox.style.top = '0';
+    selBox.style.opacity = '0';
+    selBox.value = JSON.stringify({ dati: this.homeSrvc.personaggi });
+    document.body.appendChild(selBox);
+    selBox.focus();
+    selBox.select();
+    document.execCommand('copy');
+    document.body.removeChild(selBox);
+    // const tab = window.open('about:blank', '_blank');
+    // tab.document.write(
+    //   `<p>${JSON.stringify({ dati: this.homeSrvc.personaggi })}</p>`
+    // );
+    // tab.document.close();
   }
 }
