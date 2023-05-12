@@ -1,6 +1,6 @@
 {
-	"appId": "io.ionic.starter",
-	"appName": "dndNew",
-	"webDir": "www",
-	"bundledWebRuntime": false
+  "appId": "io.ionic.endlessline",
+  "appName": "endless-line",
+  "webDir": "www",
+  "bundledWebRuntime": false
 }

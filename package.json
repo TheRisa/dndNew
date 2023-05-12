@@ -6,7 +6,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ionic serve",
-    "build": "ng build",
+    "build": "ionic build && npx cap sync",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
@@ -19,9 +19,11 @@
     "@angular/platform-browser": "^14.0.0",
     "@angular/platform-browser-dynamic": "^14.0.0",
     "@angular/router": "^14.0.0",
+    "@capacitor/android": "^5.0.3",
     "@capacitor/app": "4.0.1",
-    "@capacitor/core": "4.3.0",
+    "@capacitor/core": "^4.3.0",
     "@capacitor/haptics": "4.0.1",
+    "@capacitor/ios": "^5.0.3",
     "@capacitor/keyboard": "4.0.1",
     "@capacitor/status-bar": "4.0.1",
     "@ionic/angular": "^6.1.9",
