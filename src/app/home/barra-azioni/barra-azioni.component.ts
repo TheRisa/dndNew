@@ -24,6 +24,9 @@ export class BarraAzioniComponent implements OnInit {
    */
   ngOnInit(): void {}
 
+  /**
+   * Click sul pulsante di carica
+   */
   public carica(): void {
     this.upload?.nativeElement.click();
   }
@@ -71,10 +74,10 @@ export class BarraAzioniComponent implements OnInit {
     selBox.select();
     document.execCommand('copy');
     document.body.removeChild(selBox);
-    // const tab = window.open('about:blank', '_blank');
-    // tab.document.write(
-    //   `<p>${JSON.stringify({ dati: this.homeSrvc.personaggi })}</p>`
-    // );
-    // tab.document.close();
+    const tab = window.open('about:blank', '_blank');
+    tab.document.write(
+      `<p>${JSON.stringify({ dati: this.homeSrvc.personaggi })}</p>`
+    );
+    tab.document.close();
   }
 }
