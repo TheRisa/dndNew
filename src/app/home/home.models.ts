@@ -3,6 +3,7 @@ export interface DettagliPersonaggio {
   nome: string;
   perc: number;
   percPerTurno: number;
+  rage: number;
   effettiAttivi: Effetto[];
   statistiche: {
     // pfTot: number;
@@ -32,5 +33,5 @@ export interface Abilita {
   cd: number;
   turniAttesa: number;
   incontro: boolean;
-  bloccata?: boolean;
+  bloccata: boolean;
 }

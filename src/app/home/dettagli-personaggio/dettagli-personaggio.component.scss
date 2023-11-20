@@ -84,7 +84,14 @@
   flex-wrap: wrap;
 }
 
+.valueContainer {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
 .statistica {
+  font-size: 18px;
   width: 40%;
   margin: 5px 0;
   display: flex;

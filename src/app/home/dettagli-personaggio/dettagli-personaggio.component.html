@@ -94,7 +94,9 @@
       <div class="statisticaContainer">
         <div class="statistica" *ngFor="let stat of personaggio.statistiche">
           <p>{{ stat.descrizione }}</p>
-          <input class="enterValue" type="number" [(ngModel)]="stat.valore" />
+          <div class="valueContainer">
+            <input class="enterValue" type="number" [(ngModel)]="stat.valore" />
+          </div>
         </div>
       </div>
     </div>

@@ -9,8 +9,12 @@
     class="nome"
     [ngStyle]="{ 'font-weight': dettagli.selected ? 'bold' : '' }"
   >
-    {{ dettagli.nome }} - {{ dettagli.statistiche[3].valore }}
+    {{ dettagli.nome }} - {{ dettagli.rage }}
   </p>
+  <div>
+    <ion-icon name="arrow-up-outline" (click)="setRage(true)"></ion-icon>
+    <ion-icon name="arrow-down-outline" (click)="setRage(false)"></ion-icon>
+  </div>
   <!-- Percentuale rapidità -->
   <div
     class="percBarContainer"
