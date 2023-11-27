@@ -8,30 +8,7 @@ import { DettagliPersonaggio, Effetto, morenteLabel } from './home.models';
 })
 export class HomeService {
   /** Lista dei personaggi da mostrare */
-  private personaggi: DettagliPersonaggio[] = [
-    {
-      effettiAttivi: [],
-      nome: 'as',
-      perc: 120,
-      percPerTurno: 12,
-      rage: 1,
-      superiorita: 0,
-      sovraccarico: 0,
-      sovraccaricoMax: 3,
-      selected: true
-    },
-    {
-      effettiAttivi: [],
-      nome: 'aqwes',
-      perc: 12,
-      percPerTurno: 120,
-      rage: 1,
-      superiorita: 0,
-      sovraccarico: 0,
-      sovraccaricoMax: 13,
-      selected: false
-    }
-  ];
+  private personaggi: DettagliPersonaggio[] = [];
 
   /**
    * Costruttore della classe
