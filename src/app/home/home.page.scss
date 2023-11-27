@@ -1,29 +1,15 @@
 .container {
-  margin: 15px;
-  padding-left: 20%;
-  padding-right: 20%;
+  margin-top: 15px;
+  padding-left: 5%;
+  padding-right: 5%;
   width: 100%;
-}
-
-@media screen and (max-width: 992px) {
-  .container {
-    padding-left: 10%;
-    padding-right: 10%;
-  }
-}
-
-@media screen and (max-width: 720px) {
-  .container {
-    padding-left: 5%;
-    padding-right: 5%;
-  }
 }
 
 .containerDomini {
   width: 100%;
   padding: 0 2%;
   max-height: 410px;
-  overflow-x: auto;
+  overflow-x: hidden;
   overflow-y: auto;
 }
 
@@ -31,4 +17,26 @@
   width: 100%;
   padding: 0 2%;
   overflow-x: auto;
+}
+
+@media screen and (max-width: 992px) {
+  .container {
+    padding-left: 5%;
+    padding-right: 5%;
+  }
+
+  .containerDomini {
+    overflow-x: auto;
+  }
+}
+
+@media screen and (max-width: 720px) {
+  .container {
+    padding-left: 2%;
+    padding-right: 2%;
+  }
+
+  .containerDomini {
+    overflow-x: auto;
+  }
 }

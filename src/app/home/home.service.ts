@@ -1,20 +1,60 @@
 import { Injectable } from '@angular/core';
 
-import { DettagliPersonaggio, Effetto } from './home.models';
+import { DettagliPersonaggio, Effetto, morenteLabel } from './home.models';
 
 /** Classe per la gestione del service HomeService */
 @Injectable({
   providedIn: 'root'
 })
 export class HomeService {
-  // FIXME: rendimi private con getter e setter
   /** Lista dei personaggi da mostrare */
-  public personaggi: DettagliPersonaggio[] = [];
+  private personaggi: DettagliPersonaggio[] = [
+    {
+      effettiAttivi: [],
+      nome: 'as',
+      perc: 120,
+      percPerTurno: 12,
+      rage: 1,
+      superiorita: 0,
+      sovraccarico: 0,
+      sovraccaricoMax: 3,
+      selected: true
+    },
+    {
+      effettiAttivi: [],
+      nome: 'aqwes',
+      perc: 12,
+      percPerTurno: 120,
+      rage: 1,
+      superiorita: 0,
+      sovraccarico: 0,
+      sovraccaricoMax: 13,
+      selected: false
+    }
+  ];
 
   /**
    * Costruttore della classe
    */
   constructor() {}
+
+  /**
+   * Getter di personaggi
+   *
+   * @returns Lista dei personaggi
+   */
+  public getPersonaggiList(): DettagliPersonaggio[] {
+    return this.personaggi;
+  }
+
+  /**
+   * Controlla se c'è almeno un personaggio caricato
+   *
+   * @returns True se i personaggi sono stati caricati
+   */
+  public isPersonaggiCaricati(): boolean {
+    return this.personaggi.length > 0;
+  }
 
   /**
    * Getter del personaggio attualmente selezionato
@@ -48,11 +88,13 @@ export class HomeService {
     // Variabile di appoggio
     const personaggio = this.getPersonaggioSelezionato();
     if (personaggio) {
-      // Diminuisco del 100% la %
-      personaggio.perc = personaggio.perc - 100;
       // Se è < -200 la riporto a -200
       if (personaggio.perc < -200) {
         personaggio.perc = -200;
+      }
+      // Se è > 100 la riporto a 100
+      if (personaggio.perc > 100) {
+        personaggio.perc = 100;
       }
 
       // Riduco di 1 turno gli effetti attivi
@@ -64,20 +106,6 @@ export class HomeService {
         (effetto) => effetto.durata > 0
       );
 
-      // Aggiorno i cd delle abilità
-      personaggio.abilita.forEach((tipoAbilita) => {
-        tipoAbilita.forEach((abilita) => {
-          // Se è un'abilità bloccata o a incontro non devo toccare il cd attuale
-          if (abilita.bloccata || abilita.incontro) {
-            return;
-          }
-
-          // Abbasso di 1 il cd (minimo 0)
-          abilita.turniAttesa =
-            abilita.turniAttesa > 0 ? abilita.turniAttesa - 1 : 0;
-        });
-      });
-
       // Riordino i personaggi
       this.riordinaPersonaggi();
     }
@@ -88,11 +116,32 @@ export class HomeService {
    */
   public nextRound(): void {
     this.personaggi.forEach((personaggio) => {
+      // Se il personaggio è morto non ottiene rapidità
+      if (personaggio.isMorente) {
+        personaggio.effettiAttivi.map((effetto) => {
+          // Cerco effetto di morente per abbasare la durata
+          if (effetto.descrizione === morenteLabel) {
+            effetto.durata = effetto.durata - 1;
+            // Evito durate negative
+            if (effetto.durata < 0) {
+              effetto.durata = 0;
+            }
+            // Se morente è terminato allora il personaggio è morto
+            if (effetto.durata === 0) {
+              personaggio.isDead = true;
+              personaggio.effettiAttivi = [];
+              personaggio.superiorita = 0;
+            }
+          }
+        });
+        return;
+      }
+
       // Aggiorno la perc
       personaggio.perc = personaggio.perc + personaggio.percPerTurno;
-      // Se la perc è > 200 la riporto a 200
-      if (personaggio.perc > 200) {
-        personaggio.perc = 200;
+      // Se la perc è > 300 la riporto a 300
+      if (personaggio.perc > 300) {
+        personaggio.perc = 300;
       }
     });
 

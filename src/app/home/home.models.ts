@@ -4,21 +4,12 @@ export interface DettagliPersonaggio {
   perc: number;
   percPerTurno: number;
   rage: number;
+  superiorita: number;
+  sovraccarico: number;
+  sovraccaricoMax: number;
   effettiAttivi: Effetto[];
-  statistiche: {
-    // pfTot: number;
-    // pfAttuali: number;
-    // pfTmp: number;
-    // durabilita: number;
-    // riduzione: number;
-    // bonusDanno: number;
-    // bonusTxC: number;
-    // bonusCrit: number;
-    // bonusCrtiChance: number;
-    descrizione: string;
-    valore: number;
-  }[];
-  abilita: Abilita[][];
+  isMorente?: boolean;
+  isDead?: boolean;
   selected?: boolean;
 }
 
@@ -35,3 +26,10 @@ export interface Abilita {
   incontro: boolean;
   bloccata: boolean;
 }
+
+/** Label per la descrizione dell'effetto di sovraccaricato */
+export const sovraccaricatoLabel = 'Sovraccaricato';
+/** Label per la descrizione dell'effetto di esausto */
+export const esaustoLabel = 'Esausto';
+/** Label per la descrizione dell'effetto di morente */
+export const morenteLabel = 'Morente';

@@ -62,13 +62,13 @@ export class BarraAzioniComponent implements OnInit {
    * Metodo di salvataggio dei dati attuali (apre tab da cui copiare i dati)
    */
   public salva(): void {
-    console.log(JSON.stringify({ dati: this.homeSrvc.personaggi }));
+    console.log(JSON.stringify({ dati: this.homeSrvc.getPersonaggiList() }));
     const selBox = document.createElement('textarea');
     selBox.style.position = 'fixed';
     selBox.style.left = '0';
     selBox.style.top = '0';
     selBox.style.opacity = '0';
-    selBox.value = JSON.stringify({ dati: this.homeSrvc.personaggi });
+    selBox.value = JSON.stringify({ dati: this.homeSrvc.getPersonaggiList() });
     document.body.appendChild(selBox);
     selBox.focus();
     selBox.select();
@@ -76,7 +76,7 @@ export class BarraAzioniComponent implements OnInit {
     document.body.removeChild(selBox);
     const tab = window.open('about:blank', '_blank');
     tab.document.write(
-      `<p>${JSON.stringify({ dati: this.homeSrvc.personaggi })}</p>`
+      `<p>${JSON.stringify({ dati: this.homeSrvc.getPersonaggiList() })}</p>`
     );
     tab.document.close();
   }

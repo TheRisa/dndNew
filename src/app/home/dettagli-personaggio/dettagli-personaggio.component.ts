@@ -2,7 +2,11 @@ import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { IonModal } from '@ionic/angular';
 import { OverlayEventDetail } from '@ionic/core';
 
-import { Abilita, DettagliPersonaggio } from '../home.models';
+import {
+  Abilita,
+  DettagliPersonaggio,
+  sovraccaricatoLabel
+} from '../home.models';
 
 import { HomeService } from '../home.service';
 
@@ -112,6 +116,11 @@ export class DettagliPersonaggioComponent implements OnInit {
     return '';
   }
 
+  /**
+   * Click su abilità per gestione cd
+   *
+   * @param abilita Abilità cliccata
+   */
   public gestisciCdAbilita(abilita: Abilita): void {
     // Se l'abilitaà è bloccata non devo interagirci
     if (abilita.bloccata) {
@@ -122,5 +131,45 @@ export class DettagliPersonaggioComponent implements OnInit {
     // Se è in cd ho cliccato per diminuire il cd (quindi lo abbasso di 1)
     abilita.turniAttesa =
       abilita.turniAttesa === 0 ? abilita.cd : abilita.turniAttesa - 1;
+  }
+
+  /**
+   * Metodo al clisk sui pulsanti di gestione superiorità
+   *
+   * @param isSup Flag che indica se aggiungere superiorità o inferiorità
+   */
+  public cambiaSup(isSup: boolean): void {
+    this.personaggio.superiorita = isSup
+      ? this.personaggio.superiorita + 1
+      : this.personaggio.superiorita - 1;
+
+    if (this.personaggio.superiorita > 2) {
+      this.personaggio.superiorita = 2;
+    }
+    if (this.personaggio.superiorita < -2) {
+      this.personaggio.superiorita = -2;
+    }
+  }
+
+  /**
+   * Metodo al clisk sui pulsanti di gestione sovraccarico
+   *
+   * @param isIncrease Flag che indica se aggiungere o togliere sovraccarico
+   */
+  public cambiaSov(isIncrease: boolean): void {
+    this.personaggio.sovraccarico = isIncrease
+      ? this.personaggio.sovraccarico + 1
+      : this.personaggio.sovraccarico - 1;
+
+    if (this.personaggio.sovraccarico < 0) {
+      this.personaggio.sovraccarico = 0;
+    }
+
+    if (this.personaggio.sovraccarico === this.personaggio.sovraccaricoMax) {
+      this.personaggio.effettiAttivi.push({
+        durata: 1,
+        descrizione: sovraccaricatoLabel
+      });
+    }
   }
 }

@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 
-import { DettagliPersonaggio } from '../home.models';
+import { DettagliPersonaggio, morenteLabel } from '../home.models';
 import { HomeService } from '../home.service';
 
 /** Classe per la gestione di DominioPersonaggioComponent */
@@ -16,9 +16,10 @@ export class DominioPersonaggioComponent implements OnInit {
     perc: 0,
     percPerTurno: 0,
     rage: 0,
-    effettiAttivi: [],
-    statistiche: [],
-    abilita: []
+    superiorita: 0,
+    sovraccarico: 0,
+    sovraccaricoMax: 0,
+    effettiAttivi: []
   };
   /** Indice del dominio */
   @Input() indice = -1;
@@ -45,6 +46,35 @@ export class DominioPersonaggioComponent implements OnInit {
   }
 
   /**
+   * Metodo al click sul pulsante di morte. Imposta il personaggio come morente
+   */
+  public setDeath(): void {
+    // Se è morto non faccio niente
+    if (this.dettagli.isDead) {
+      return;
+    }
+
+    this.dettagli.isMorente = !this.dettagli.isMorente;
+
+    // Setup per morente
+    if (this.dettagli.isMorente) {
+      this.dettagli.perc = 0;
+      this.dettagli.rage = 0;
+
+      this.dettagli.effettiAttivi.push({
+        descrizione: morenteLabel,
+        durata: 3
+      });
+      return;
+    }
+
+    // Risollevato da terra
+    this.dettagli.effettiAttivi = this.dettagli.effettiAttivi.filter(
+      (effetto) => effetto.descrizione !== morenteLabel
+    );
+  }
+
+  /**
    * Metodo per alterare la percentuale da button
    *
    * @param incremento Flag per indicare un incremento o decremento
@@ -56,9 +86,9 @@ export class DominioPersonaggioComponent implements OnInit {
     this.dettagli.perc = incremento
       ? this.dettagli.perc + 10
       : this.dettagli.perc - 10;
-    // Se la perc è 200 o più torno al 200%
-    if (incremento && this.dettagli.perc >= 200) {
-      this.dettagli.perc = 200;
+    // Se la perc è 300 o più torno al 300%
+    if (incremento && this.dettagli.perc >= 300) {
+      this.dettagli.perc = 300;
     }
     // Se la perc è -200 o meno torno al -200%
     if (!incremento && this.dettagli.perc <= -200) {
@@ -72,13 +102,17 @@ export class DominioPersonaggioComponent implements OnInit {
    * @returns Colore del background da applicare
    */
   public calcolaBackground(): string {
-    // Applico sfondo verde se è 200%
-    if (this.dettagli.perc === 200) {
-      return '#8af58a';
+    // Applico sfondo verde potente se è 300%
+    if (this.dettagli.perc === 300) {
+      return 'rgb(106, 255, 47)';
     }
-    // Applico sfondo rosso se è 200%
+    // Applico sfondo rosso potente se è -200%
     if (this.dettagli.perc === -200) {
       return '#eb7676';
+    }
+    // Applico sfondo verde base se è 200%
+    if (this.dettagli.perc === 200) {
+      return '#8af58a';
     }
     // Applico sfondo giallo se il 100% è superato
     if (this.dettagli.perc > 99) {

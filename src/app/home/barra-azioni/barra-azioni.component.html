@@ -5,7 +5,7 @@
     color="light"
     class="button"
     (click)="homeSrvc.nextRound()"
-    [disabled]="homeSrvc.personaggi.length === 0"
+    [disabled]="!homeSrvc.isPersonaggiCaricati()"
     ><ion-icon name="play-forward-outline"></ion-icon
   ></ion-button>
   <!-- Export dati -->
