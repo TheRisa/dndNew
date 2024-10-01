@@ -151,6 +151,19 @@ export class HomeService {
   }
 
   /**
+   * Metodo per il caricamento dei personaggi
+   *
+   * @param personaggi Dati dei personaggi da caricare
+   */
+  public aggiungiPersonaggi(personaggi: DettagliPersonaggio[]) {
+    // Clonazione senza riferimento
+    this.personaggi = this.personaggi.concat(
+      JSON.parse(JSON.stringify(personaggi))
+    );
+    this.riordinaPersonaggi();
+  }
+
+  /**
    * Metodo per riordinare i personaggi in ordine decrescente di perc
    */
   private riordinaPersonaggi(): void {

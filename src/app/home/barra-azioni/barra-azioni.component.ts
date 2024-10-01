@@ -2,6 +2,7 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 
 import { HomeService } from '../home.service';
 import { DettagliPersonaggio } from '../home.models';
+import { IonModal } from '@ionic/angular';
 
 /** Classe per la gestione del componente BarraAzioniComponent */
 @Component({
@@ -11,6 +12,19 @@ import { DettagliPersonaggio } from '../home.models';
 })
 export class BarraAzioniComponent implements OnInit {
   @ViewChild('upload') upload: ElementRef;
+  @ViewChild(IonModal) modal: IonModal;
+
+  /** Dati per il personaggio da inserire */
+  public personaggioAggiunto: DettagliPersonaggio = {
+    effettiAttivi: [],
+    nome: undefined,
+    perc: undefined,
+    percPerTurno: undefined,
+    rage: 0,
+    sovraccarico: 0,
+    sovraccaricoMax: undefined,
+    superiorita: 0
+  };
 
   /**
    * Costruttore della classe
@@ -56,6 +70,26 @@ export class BarraAzioniComponent implements OnInit {
       }
     };
     fileReader.readAsText(file);
+  }
+
+  /**
+   * Apre la modale per aggiungere un personaggio
+   */
+  public openAddModal(): void {
+    this.personaggioAggiunto.nome = undefined;
+    this.personaggioAggiunto.perc = undefined;
+    this.personaggioAggiunto.percPerTurno = undefined;
+    this.personaggioAggiunto.sovraccarico = undefined;
+    this.personaggioAggiunto.sovraccaricoMax = undefined;
+    this.modal.present();
+  }
+
+  /**
+   * Metodo al click sul conferma nella modale
+   */
+  public aggiungiPersonaggio(): void {
+    this.homeSrvc.aggiungiPersonaggi([this.personaggioAggiunto]);
+    this.modal.dismiss();
   }
 
   /**
