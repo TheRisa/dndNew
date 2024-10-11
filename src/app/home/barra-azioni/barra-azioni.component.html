@@ -17,19 +17,9 @@
     ><ion-icon name="save-outline"></ion-icon
   ></ion-button>
   <!-- Import dati -->
-  <input
-    hidden
-    #upload
-    type="file"
-    (change)="fileCaricato($event.target.files[0])"
-  />
   <ion-button color="light" class="button" (click)="carica()"
     ><ion-icon name="download-outline"></ion-icon
   ></ion-button>
-  <!-- Settings -TODO: -->
-  <!-- <ion-button color="light" class="button"
-    ><ion-icon name="cog-outline"></ion-icon
-  ></ion-button> -->
 </div>
 
 <!-- Modale inserimento -->
@@ -42,7 +32,7 @@
     >
     <ion-content>
       <!-- Nome -->
-      <ion-item>
+      <ion-item style="margin-top: 45px">
         <ion-input
           type="text"
           placeholder="Nome personaggio"
@@ -65,30 +55,16 @@
           [(ngModel)]="personaggioAggiunto.percPerTurno"
         ></ion-input>
       </ion-item>
-      <!-- Sovraccarico attuale -->
-      <ion-item>
-        <ion-input
-          type="number"
-          placeholder="Sovraccarico attuale"
-          [(ngModel)]="personaggioAggiunto.sovraccarico"
-        ></ion-input>
-      </ion-item>
-      <!-- Sovraccarico massimo -->
-      <ion-item>
-        <ion-input
-          type="number"
-          placeholder="Sovraccarico massimo"
-          [(ngModel)]="personaggioAggiunto.sovraccaricoMax"
-        ></ion-input>
-      </ion-item>
 
       <!-- Conferma -->
+      <!-- perc = 0 è un valore ammesso -->
       <ion-button
         expand="block"
         [disabled]="
           !personaggioAggiunto.nome ||
-          !personaggioAggiunto.percPerTurno ||
-          !personaggioAggiunto.sovraccaricoMax
+          personaggioAggiunto.perc === null ||
+          personaggioAggiunto.perc === undefined ||
+          !personaggioAggiunto.percPerTurno
         "
         (click)="aggiungiPersonaggio()"
         style="margin: 15px 10px"

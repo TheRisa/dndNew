@@ -5,8 +5,6 @@ export interface DettagliPersonaggio {
   percPerTurno: number;
   rage: number;
   superiorita: number;
-  sovraccarico: number;
-  sovraccaricoMax: number;
   effettiAttivi: Effetto[];
   isMorente?: boolean;
   isDead?: boolean;

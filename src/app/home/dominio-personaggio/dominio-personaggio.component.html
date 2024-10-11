@@ -21,25 +21,13 @@
       [name]="dettagli.isMorente ? 'heart-dislike-outline' : 'heart-outline'"
       (click)="setDeath()"
       [color]="dettagli.isMorente ? 'danger' : 'success'"
-      style="margin-right: 20px"
     ></ion-icon>
     <!-- Personaggio morto -->
     <ion-icon
       *ngIf="dettagli.isDead"
       name="skull-outline"
+      (click)="setDeath()"
       color="medium"
-      style="margin-right: 20px"
-    ></ion-icon>
-    <!-- Up/down per rage -->
-    <ion-icon
-      name="arrow-up-outline"
-      (click)="setRage(true)"
-      style="color: red"
-    ></ion-icon>
-    <ion-icon
-      name="arrow-down-outline"
-      (click)="setRage(false)"
-      style="color: blue"
     ></ion-icon>
   </div>
   <!-- Percentuale rapidità -->
@@ -79,18 +67,42 @@
     </div>
   </div>
   <!-- Button di gestione % -->
-  <div class="buttons">
+  <div>
     <ion-button
       (click)="cambiaPerc($event, true)"
-      [disabled]="dettagli.isDead"
+      [disabled]="dettagli.isDead || dettagli.isMorente"
       color="success"
       >+</ion-button
     >
     <ion-button
       (click)="cambiaPerc($event, false)"
-      [disabled]="dettagli.isDead"
+      [disabled]="dettagli.isDead || dettagli.isMorente"
       color="danger"
       >-</ion-button
     >
   </div>
+  <!-- Buttons per rage -->
+  <div>
+    <ion-button
+      (click)="setRage(true)"
+      [disabled]="dettagli.isDead || dettagli.isMorente"
+      color="primary"
+      >↑</ion-button
+    >
+    <ion-button
+      (click)="setRage(false)"
+      [disabled]="dettagli.isDead || dettagli.isMorente || dettagli.rage === 0"
+      color="warning"
+      >↓</ion-button
+    >
+  </div>
+</div>
+<!-- Completa turno -->
+<div
+  class="buttonRow"
+  *ngIf="dettagli.selected && !dettagli.isDead && !dettagli.isMorente"
+>
+  <ion-button (click)="homeSrvc.completaTurno()" color="dark"
+    >Completa Turno</ion-button
+  >
 </div>

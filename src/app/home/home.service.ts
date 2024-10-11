@@ -93,7 +93,12 @@ export class HomeService {
    */
   public nextRound(): void {
     this.personaggi.forEach((personaggio) => {
-      // Se il personaggio è morto non ottiene rapidità
+      // Per i personaggi morti non fo nulla
+      if (personaggio.isDead) {
+        return;
+      }
+
+      // Se il personaggio è morente non ottiene rapidità
       if (personaggio.isMorente) {
         personaggio.effettiAttivi.map((effetto) => {
           // Cerco effetto di morente per abbasare la durata

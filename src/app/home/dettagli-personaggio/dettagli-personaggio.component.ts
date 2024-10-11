@@ -150,26 +150,4 @@ export class DettagliPersonaggioComponent implements OnInit {
       this.personaggio.superiorita = -2;
     }
   }
-
-  /**
-   * Metodo al clisk sui pulsanti di gestione sovraccarico
-   *
-   * @param isIncrease Flag che indica se aggiungere o togliere sovraccarico
-   */
-  public cambiaSov(isIncrease: boolean): void {
-    this.personaggio.sovraccarico = isIncrease
-      ? this.personaggio.sovraccarico + 1
-      : this.personaggio.sovraccarico - 1;
-
-    if (this.personaggio.sovraccarico < 0) {
-      this.personaggio.sovraccarico = 0;
-    }
-
-    if (this.personaggio.sovraccarico === this.personaggio.sovraccaricoMax) {
-      this.personaggio.effettiAttivi.push({
-        durata: 1,
-        descrizione: sovraccaricatoLabel
-      });
-    }
-  }
 }

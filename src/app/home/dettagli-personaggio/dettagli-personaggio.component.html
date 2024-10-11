@@ -43,30 +43,6 @@
         {{ personaggio.superiorita }}
         {{ personaggio.superiorita > 0 ? 'Supperiorità' : 'Inferiorità' }}
       </p>
-
-      <!-- Sovraccarico -->
-      <div class="title">
-        Sovraccarico
-        <!-- Button di gestione sup/inf -->
-        <div class="buttons" style="margin-left: 20px">
-          <ion-button
-            (click)="cambiaSov(true)"
-            [disabled]="personaggio.isDead"
-            color="success"
-            >+</ion-button
-          >
-          <ion-button
-            (click)="cambiaSov(false)"
-            [disabled]="personaggio.isDead"
-            color="danger"
-            >-</ion-button
-          >
-        </div>
-      </div>
-      <!-- Sup/inf -->
-      <p style="width: 100%; text-align: center">
-        {{ personaggio.sovraccarico }} / {{ personaggio.sovraccaricoMax }}
-      </p>
     </div>
 
     <!-- Effetti attivi -->
@@ -148,15 +124,5 @@
         </div>
       </div>
     </div>
-  </div>
-  <!-- Riga di pulsanti -->
-  <div class="buttonRow">
-    <!-- Completa turno -->
-    <ion-button
-      (click)="homeSrvc.completaTurno()"
-      [disabled]="personaggio.isDead"
-      color="dark"
-      >Completa Turno</ion-button
-    >
   </div>
 </div>

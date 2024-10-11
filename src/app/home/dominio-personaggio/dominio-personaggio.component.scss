@@ -14,7 +14,7 @@
 }
 
 .percBarContainer {
-  width: 55%;
+  width: 40%;
   height: 30px;
   position: relative;
   border-radius: 5px;
@@ -40,8 +40,12 @@
   text-align: end;
 }
 
-.buttons {
-  width: 15%;
+.buttonRow {
+  margin-top: 5px;
+  margin-bottom: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 /* Chrome, Safari, Edge, Opera */

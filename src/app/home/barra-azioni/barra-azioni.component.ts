@@ -18,11 +18,9 @@ export class BarraAzioniComponent implements OnInit {
   public personaggioAggiunto: DettagliPersonaggio = {
     effettiAttivi: [],
     nome: undefined,
-    perc: undefined,
-    percPerTurno: undefined,
+    perc: 0,
+    percPerTurno: 0,
     rage: 0,
-    sovraccarico: 0,
-    sovraccaricoMax: undefined,
     superiorita: 0
   };
 
@@ -42,34 +40,9 @@ export class BarraAzioniComponent implements OnInit {
    * Click sul pulsante di carica
    */
   public carica(): void {
-    this.upload?.nativeElement.click();
-  }
-
-  /**
-   * Metodo scatenato al caricamento di un file
-   *
-   * @param file File caricato
-   */
-  public fileCaricato(file: File): void {
-    if (!file.type.includes('plain')) {
-      console.error('Formato errato');
-      return;
-    }
-
-    const fileReader: FileReader = new FileReader();
-    fileReader.onloadend = () => {
-      try {
-        const dati: { dati: DettagliPersonaggio[] } = JSON.parse(
-          `${fileReader.result}`
-        );
-        if (dati && dati.dati) {
-          this.homeSrvc.caricapersonaggi(dati.dati);
-        }
-      } catch (e) {
-        console.error('Errore nel parsing dei dati');
-      }
-    };
-    fileReader.readAsText(file);
+    this.homeSrvc.caricapersonaggi(
+      JSON.parse(localStorage.getItem('personaggi'))
+    );
   }
 
   /**
@@ -79,8 +52,6 @@ export class BarraAzioniComponent implements OnInit {
     this.personaggioAggiunto.nome = undefined;
     this.personaggioAggiunto.perc = undefined;
     this.personaggioAggiunto.percPerTurno = undefined;
-    this.personaggioAggiunto.sovraccarico = undefined;
-    this.personaggioAggiunto.sovraccaricoMax = undefined;
     this.modal.present();
   }
 
@@ -96,22 +67,9 @@ export class BarraAzioniComponent implements OnInit {
    * Metodo di salvataggio dei dati attuali (apre tab da cui copiare i dati)
    */
   public salva(): void {
-    console.log(JSON.stringify({ dati: this.homeSrvc.getPersonaggiList() }));
-    const selBox = document.createElement('textarea');
-    selBox.style.position = 'fixed';
-    selBox.style.left = '0';
-    selBox.style.top = '0';
-    selBox.style.opacity = '0';
-    selBox.value = JSON.stringify({ dati: this.homeSrvc.getPersonaggiList() });
-    document.body.appendChild(selBox);
-    selBox.focus();
-    selBox.select();
-    document.execCommand('copy');
-    document.body.removeChild(selBox);
-    const tab = window.open('about:blank', '_blank');
-    tab.document.write(
-      `<p>${JSON.stringify({ dati: this.homeSrvc.getPersonaggiList() })}</p>`
+    localStorage.setItem(
+      'personaggi',
+      JSON.stringify(this.homeSrvc.getPersonaggiList())
     );
-    tab.document.close();
   }
 }

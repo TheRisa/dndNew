@@ -17,8 +17,6 @@ export class DominioPersonaggioComponent implements OnInit {
     percPerTurno: 0,
     rage: 0,
     superiorita: 0,
-    sovraccarico: 0,
-    sovraccaricoMax: 0,
     effettiAttivi: []
   };
   /** Indice del dominio */
@@ -43,35 +41,44 @@ export class DominioPersonaggioComponent implements OnInit {
    */
   public setRage(isUp: boolean): void {
     this.dettagli.rage = isUp ? this.dettagli.rage + 1 : this.dettagli.rage - 1;
+    this.dettagli.rage = this.dettagli.rage < 0 ? 0 : this.dettagli.rage;
   }
 
   /**
    * Metodo al click sul pulsante di morte. Imposta il personaggio come morente
    */
   public setDeath(): void {
-    // Se è morto non faccio niente
+    // La logica è: 1 - se sono vivo diventa morente, 2 - se sono morente diventa morto, 3 - se sono morto torno vivo
+    // Elimino l'effetto di morente (al limite viene rimpostato nel terzo caso)
+    this.dettagli.effettiAttivi = this.dettagli.effettiAttivi.filter(
+      (effetto) => effetto.descrizione !== morenteLabel
+    );
+
+    // 3 - Se è morto e ci riclicco è per farlo "rinvivire"
     if (this.dettagli.isDead) {
+      this.dettagli.isDead = false;
+      this.dettagli.isMorente = false;
       return;
     }
 
-    this.dettagli.isMorente = !this.dettagli.isMorente;
-
-    // Setup per morente
+    // 2 - Se è morente allora muore
     if (this.dettagli.isMorente) {
       this.dettagli.perc = 0;
       this.dettagli.rage = 0;
 
-      this.dettagli.effettiAttivi.push({
-        descrizione: morenteLabel,
-        durata: 3
-      });
+      this.dettagli.isDead = true;
       return;
     }
 
-    // Risollevato da terra
-    this.dettagli.effettiAttivi = this.dettagli.effettiAttivi.filter(
-      (effetto) => effetto.descrizione !== morenteLabel
-    );
+    // 1 - Per escludione è viso, allora diventa morente
+    this.dettagli.isMorente = true;
+    this.dettagli.perc = 0;
+    this.dettagli.rage = 0;
+
+    this.dettagli.effettiAttivi.push({
+      descrizione: morenteLabel,
+      durata: 3
+    });
   }
 
   /**
