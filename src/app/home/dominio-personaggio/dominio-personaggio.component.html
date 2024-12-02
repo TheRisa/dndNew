@@ -67,18 +67,34 @@
     </div>
   </div>
   <!-- Button di gestione % -->
+  <!-- 1% -->
   <div>
     <ion-button
-      (click)="cambiaPerc($event, true)"
+      (click)="cambiaPerc($event, true, 1)"
       [disabled]="dettagli.isDead || dettagli.isMorente"
       color="success"
-      >+</ion-button
+      >+1</ion-button
     >
     <ion-button
-      (click)="cambiaPerc($event, false)"
+      (click)="cambiaPerc($event, false, 1)"
       [disabled]="dettagli.isDead || dettagli.isMorente"
       color="danger"
-      >-</ion-button
+      >-1</ion-button
+    >
+  </div>
+  <!-- 10% -->
+  <div>
+    <ion-button
+      (click)="cambiaPerc($event, true, 10)"
+      [disabled]="dettagli.isDead || dettagli.isMorente"
+      color="success"
+      >+10</ion-button
+    >
+    <ion-button
+      (click)="cambiaPerc($event, false, 10)"
+      [disabled]="dettagli.isDead || dettagli.isMorente"
+      color="danger"
+      >-10</ion-button
     >
   </div>
   <!-- Buttons per rage -->

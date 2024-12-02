@@ -85,14 +85,19 @@ export class DominioPersonaggioComponent implements OnInit {
    * Metodo per alterare la percentuale da button
    *
    * @param incremento Flag per indicare un incremento o decremento
+   * @param valoreIncremento Valore dell'incremento o del decremento
    */
-  public cambiaPerc(event: any, incremento: boolean): void {
+  public cambiaPerc(
+    event: any,
+    incremento: boolean,
+    valoreIncremento: number
+  ): void {
     // Blocco altri click
     event.stopPropagation();
-    // Aggiorno perc di 10 in 10
+    // Aggiorno perc
     this.dettagli.perc = incremento
-      ? this.dettagli.perc + 10
-      : this.dettagli.perc - 10;
+      ? this.dettagli.perc + valoreIncremento
+      : this.dettagli.perc - valoreIncremento;
     // Se la perc è 300 o più torno al 300%
     if (incremento && this.dettagli.perc >= 300) {
       this.dettagli.perc = 300;
