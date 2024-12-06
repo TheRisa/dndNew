@@ -17,6 +17,7 @@ export class DominioPersonaggioComponent implements OnInit {
     percPerTurno: 0,
     rage: 0,
     superiorita: 0,
+    padronanza: 0,
     effettiAttivi: []
   };
   /** Indice del dominio */
@@ -77,7 +78,8 @@ export class DominioPersonaggioComponent implements OnInit {
 
     this.dettagli.effettiAttivi.push({
       descrizione: morenteLabel,
-      durata: 3
+      durata: 3,
+      isPermanent: false
     });
   }
 

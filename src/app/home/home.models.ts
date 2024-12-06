@@ -5,6 +5,7 @@ export interface DettagliPersonaggio {
   percPerTurno: number;
   rage: number;
   superiorita: number;
+  padronanza: number;
   effettiAttivi: Effetto[];
   isMorente?: boolean;
   isDead?: boolean;
@@ -14,7 +15,8 @@ export interface DettagliPersonaggio {
 /** Interfaccia per gli effetti attivi */
 export interface Effetto {
   descrizione: string;
-  durata: number;
+  durata?: number;
+  isPermanent: boolean;
 }
 
 /** Interfaccia per le abilità */

@@ -2,11 +2,7 @@ import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { IonModal } from '@ionic/angular';
 import { OverlayEventDetail } from '@ionic/core';
 
-import {
-  Abilita,
-  DettagliPersonaggio,
-  sovraccaricatoLabel
-} from '../home.models';
+import { Abilita, DettagliPersonaggio } from '../home.models';
 
 import { HomeService } from '../home.service';
 
@@ -26,6 +22,8 @@ export class DettagliPersonaggioComponent implements OnInit {
   public descrizioneEffetto = '';
   /** NgModel per durata effetto */
   public durataEffetto = null;
+  /** NgModel per durata effetto */
+  public isPermanent = false;
 
   /**
    * Costruttore della classe
@@ -60,7 +58,11 @@ export class DettagliPersonaggioComponent implements OnInit {
    */
   public confirm(): void {
     this.modal.dismiss(
-      { descrizione: this.descrizioneEffetto, durata: this.durataEffetto },
+      {
+        descrizione: this.descrizioneEffetto,
+        durata: this.durataEffetto,
+        isPermanent: this.isPermanent
+      },
       'confirm'
     );
   }
@@ -73,81 +75,71 @@ export class DettagliPersonaggioComponent implements OnInit {
   public onWillDismiss(event: Event) {
     const ev = event as CustomEvent<OverlayEventDetail<string>>;
     // Aggiorno gli effetti se conferma
-    if (
-      ev.detail.role === 'confirm' &&
-      this.durataEffetto &&
-      this.descrizioneEffetto
-    ) {
+    if (ev.detail.role === 'confirm' && this.descrizioneEffetto) {
       this.homeSrvc.aggiungiEffetto({
         descrizione: this.descrizioneEffetto,
-        durata: this.durataEffetto
+        durata: this.durataEffetto,
+        isPermanent: this.isPermanent
       });
     }
 
     // Reset dei form
     this.descrizioneEffetto = '';
     this.durataEffetto = null;
+    this.isPermanent = false;
   }
 
   /**
-   * Passando un'abilità calcola il colore da mostrare
+   * Metodo al clisk sui pulsanti di gestione padronanza
    *
-   * @param abilita Abilità di cui calcolare il colore
-   * @returns Colore dell'abilità
+   * @param isPadronanza Flag che indica se aggiungere padronanza o sfinimento
    */
-  public calcolaColore(abilita: Abilita): string {
-    // Se è bloccata allora è rossa
-    if (abilita.bloccata) {
-      return '#eb7676';
-    }
+  public cambiaPadronanza(isPadronanza: boolean): void {
+    this.personaggio.padronanza = isPadronanza
+      ? this.personaggio.padronanza + 1
+      : this.personaggio.padronanza - 1;
 
-    // Controllo se l'abilità è a incontro
-    if (abilita.incontro) {
-      // Se l'abilità è stata usata allora è arancione, altrimenti è verde
-      return abilita.turniAttesa === 0 ? '#f7ce83' : '#8af58a';
+    if (this.personaggio.padronanza > 4) {
+      this.personaggio.padronanza = 4;
     }
-
-    // Se l'abilità è disponibile allora è verde
-    if (abilita.turniAttesa === 0) {
-      return '#8af58a';
+    if (this.personaggio.padronanza < -4) {
+      this.personaggio.padronanza = -4;
     }
-
-    // L'abilità è in cd, quindi appare il numero di turni
-    return '';
   }
 
   /**
-   * Click su abilità per gestione cd
+   * Passando il grado attuale di padronanza (tra - 4 e 4) si ottiene una descrizione dell'effetto
    *
-   * @param abilita Abilità cliccata
+   * @param padronanza Grado di padronanza attuale del personaggio
+   * @returns Effetto della padronanza
    */
-  public gestisciCdAbilita(abilita: Abilita): void {
-    // Se l'abilitaà è bloccata non devo interagirci
-    if (abilita.bloccata) {
-      return;
+  public calcolaEffettoPadronanza(padronanza: number): string {
+    // Padronanza non passata o 0 -> nessun effetto
+    if (!padronanza) {
+      return '';
     }
 
-    // Se è disponibile imposto il cd al numero massimo di turniAttesa
-    // Se è in cd ho cliccato per diminuire il cd (quindi lo abbasso di 1)
-    abilita.turniAttesa =
-      abilita.turniAttesa === 0 ? abilita.cd : abilita.turniAttesa - 1;
-  }
+    // Valore positivo -> si aggiungono danni
+    // Valore negatico -> di riducono danni
+    let effetto = padronanza > 0 ? 'Aggiungi' : 'Sottrai';
 
-  /**
-   * Metodo al clisk sui pulsanti di gestione superiorità
-   *
-   * @param isSup Flag che indica se aggiungere superiorità o inferiorità
-   */
-  public cambiaSup(isSup: boolean): void {
-    this.personaggio.superiorita = isSup
-      ? this.personaggio.superiorita + 1
-      : this.personaggio.superiorita - 1;
+    // La potenza dell'effetto è simmetrica per > 0 e < 0
+    // Non si può salire oltre il 4 in abs
+    switch (Math.abs(padronanza)) {
+      case 1:
+        effetto = `${effetto} 1d4`;
+        break;
+      case 2:
+        effetto = `${effetto} 1d6`;
+        break;
+      case 3:
+        effetto = `${effetto} 1d6 e 1d4`;
+        break;
+      case 4:
+        effetto = `${effetto} 2d6`;
+        break;
+    }
 
-    if (this.personaggio.superiorita > 2) {
-      this.personaggio.superiorita = 2;
-    }
-    if (this.personaggio.superiorita < -2) {
-      this.personaggio.superiorita = -2;
-    }
+    return `${effetto} danni`;
   }
 }

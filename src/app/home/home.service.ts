@@ -74,13 +74,16 @@ export class HomeService {
         personaggio.perc = 100;
       }
 
-      // Riduco di 1 turno gli effetti attivi
+      // Riduco di 1 turno gli effetti attivi (non permanenti)
       personaggio.effettiAttivi.forEach(
-        (effetto) => (effetto.durata = effetto.durata - 1)
+        (effetto) =>
+          (effetto.durata = effetto.isPermanent
+            ? effetto.durata
+            : effetto.durata - 1)
       );
       // Rimuovo effetti terminati
       personaggio.effettiAttivi = personaggio.effettiAttivi.filter(
-        (effetto) => effetto.durata > 0
+        (effetto) => effetto.isPermanent || effetto.durata > 0
       );
 
       // Riordino i personaggi

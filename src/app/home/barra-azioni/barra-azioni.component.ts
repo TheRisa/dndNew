@@ -21,7 +21,8 @@ export class BarraAzioniComponent implements OnInit {
     perc: 0,
     percPerTurno: 0,
     rage: 0,
-    superiorita: 0
+    superiorita: 0,
+    padronanza: 0
   };
 
   /**
