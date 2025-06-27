@@ -90,6 +90,24 @@ export class DettagliPersonaggioComponent implements OnInit {
   }
 
   /**
+   * Metodo al clisk sui pulsanti di gestione superiorità
+   *
+   * @param isSup Flag che indica se aggiungere superiorità o inferiorità
+   */
+  public cambiaSup(isSup: boolean): void {
+    this.personaggio.superiorita = isSup
+      ? this.personaggio.superiorita + 1
+      : this.personaggio.superiorita - 1;
+
+    if (this.personaggio.superiorita > 2) {
+      this.personaggio.superiorita = 2;
+    }
+    if (this.personaggio.superiorita < -2) {
+      this.personaggio.superiorita = -2;
+    }
+  }
+
+  /**
    * Metodo al clisk sui pulsanti di gestione padronanza
    *
    * @param isPadronanza Flag che indica se aggiungere padronanza o sfinimento
@@ -108,7 +126,7 @@ export class DettagliPersonaggioComponent implements OnInit {
   }
 
   /**
-   * Passando il grado attuale di padronanza (tra - 4 e 4) si ottiene una descrizione dell'effetto
+   * Passando il grado attuale di padronanza si ottiene una descrizione dell'effetto
    *
    * @param padronanza Grado di padronanza attuale del personaggio
    * @returns Effetto della padronanza
@@ -135,7 +153,9 @@ export class DettagliPersonaggioComponent implements OnInit {
       case 3:
         effetto = `${effetto} 1d6 e 1d4`;
         break;
+      // Da 4 in su resta sempre 2d6 (non si possono usare più di 4 padronanze alla volta)
       case 4:
+      default:
         effetto = `${effetto} 2d6`;
         break;
     }
