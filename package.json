@@ -6,7 +6,8 @@
   "scripts": {
     "ng": "ng",
     "start": "ionic serve --port 8101",
-    "build": "ionic build && npx cap sync",
+    "build-app": "ionic build && npx cap sync",
+    "build": "ionic build --configuration production --base-href /dndNew/",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
