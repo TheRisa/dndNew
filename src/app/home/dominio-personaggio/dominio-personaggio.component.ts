@@ -40,7 +40,8 @@ export class DominioPersonaggioComponent implements OnInit {
    *
    * @param isUp True se la rage va aumentata, false se va diminuita
    */
-  public setRage(isUp: boolean): void {
+  public setRage(isUp: boolean, $event: any): void {
+    $event.stopPropagation();
     this.dettagli.rage = isUp ? this.dettagli.rage + 1 : this.dettagli.rage - 1;
     this.dettagli.rage = this.dettagli.rage < 0 ? 0 : this.dettagli.rage;
   }

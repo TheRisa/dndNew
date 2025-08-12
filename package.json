@@ -8,6 +8,7 @@
     "start": "ionic serve --port 8101",
     "build-app": "ionic build && npx cap sync",
     "build": "ionic build -- --base-href /dndNew/",
+    "deploy": "npx cpx 'www/index.html' 'www/404.html' && npx angular-cli-ghpages --dir=www --branch=master",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"

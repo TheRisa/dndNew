@@ -100,13 +100,13 @@
   <!-- Buttons per rage -->
   <div>
     <ion-button
-      (click)="setRage(true)"
+      (click)="setRage(true, $event)"
       [disabled]="dettagli.isDead || dettagli.isMorente"
       color="primary"
       >↑</ion-button
     >
     <ion-button
-      (click)="setRage(false)"
+      (click)="setRage(false, $event)"
       [disabled]="dettagli.isDead || dettagli.isMorente || dettagli.rage === 0"
       color="warning"
       >↓</ion-button
