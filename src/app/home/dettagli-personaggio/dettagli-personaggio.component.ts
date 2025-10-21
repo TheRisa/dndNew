@@ -116,13 +116,6 @@ export class DettagliPersonaggioComponent implements OnInit {
     this.personaggio.padronanza = isPadronanza
       ? this.personaggio.padronanza + 1
       : this.personaggio.padronanza - 1;
-
-    if (this.personaggio.padronanza > 4) {
-      this.personaggio.padronanza = 4;
-    }
-    if (this.personaggio.padronanza < -4) {
-      this.personaggio.padronanza = -4;
-    }
   }
 
   /**
@@ -138,28 +131,9 @@ export class DettagliPersonaggioComponent implements OnInit {
     }
 
     // Valore positivo -> si aggiungono danni
-    // Valore negatico -> di riducono danni
-    let effetto = padronanza > 0 ? 'Aggiungi' : 'Sottrai';
-
-    // La potenza dell'effetto è simmetrica per > 0 e < 0
-    // Non si può salire oltre il 4 in abs
-    switch (Math.abs(padronanza)) {
-      case 1:
-        effetto = `${effetto} 1d4`;
-        break;
-      case 2:
-        effetto = `${effetto} 1d6`;
-        break;
-      case 3:
-        effetto = `${effetto} 1d6 e 1d4`;
-        break;
-      // Da 4 in su resta sempre 2d6 (non si possono usare più di 4 padronanze alla volta)
-      case 4:
-      default:
-        effetto = `${effetto} 2d6`;
-        break;
-    }
-
-    return `${effetto} danni`;
+    // Valore negatico -> si riducono danni
+    return `${padronanza > 0 ? 'Aggiungi' : 'Sottrai'} ${
+      Math.abs(padronanza) > 4 ? 4 : Math.abs(padronanza)
+    }d4 danni`;
   }
 }
