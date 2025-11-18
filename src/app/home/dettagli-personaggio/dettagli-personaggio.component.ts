@@ -130,10 +130,15 @@ export class DettagliPersonaggioComponent implements OnInit {
       return '';
     }
 
+    let dado = '1d4';
+    if (padronanza > 1) {
+      dado = '1d8';
+    }
+    if (padronanza > 2) {
+      dado = '1d12';
+    }
     // Valore positivo -> si aggiungono danni
     // Valore negatico -> si riducono danni
-    return `${padronanza > 0 ? 'Aggiungi' : 'Sottrai'} ${
-      Math.abs(padronanza) > 4 ? 4 : Math.abs(padronanza)
-    }d4 danni`;
+    return `${padronanza > 0 ? 'Aggiungi' : 'Sottrai'} ${dado} danni`;
   }
 }
