@@ -88,6 +88,7 @@ export class HomeService {
 
       // Riordino i personaggi
       this.riordinaPersonaggi();
+      this.setPersonaggioSelezionato(0);
     }
   }
 

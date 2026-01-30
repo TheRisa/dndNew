@@ -111,54 +111,188 @@
         <!-- Modale inline per aggiunta effetto -->
         <ion-modal
           class="modal"
+          style="--height: 80%"
           trigger="open-modal"
           (willDismiss)="onWillDismiss($event)"
         >
           <ng-template>
             <ion-content class="ion-padding contentModale">
-              <!-- Descrizione effetto -->
-              <ion-item style="width: 95%; padding: 20px 0 0 5%">
-                <ion-label position="stacked">Effetto</ion-label>
-                <ion-input
-                  type="text"
-                  placeholder="Descrizione effetto"
-                  [(ngModel)]="descrizioneEffetto"
-                ></ion-input>
-              </ion-item>
-              <!-- Durata effetto -->
-              <ion-item style="width: 95%; padding: 20px 0 0 5%">
-                <ion-label position="stacked"
-                  >Durata {{ durataEffetto }} turni</ion-label
-                >
-                <ion-input
-                  type="text"
-                  type="number"
-                  placeholder="Durata effetto"
-                  [disabled]="isPermanent"
-                  (ngModelChange)="isPermanent = false"
-                  [(ngModel)]="durataEffetto"
-                ></ion-input>
-              </ion-item>
-              <!-- Effetto permanente -->
-              <ion-item style="width: 95%; padding: 20px 0 0 5%">
-                <ion-label>Senza Scadenza</ion-label>
-                <ion-checkbox
-                  slot="start"
-                  [(ngModel)]="isPermanent"
-                  (ngModelChange)="durataEffetto = null"
-                ></ion-checkbox>
-              </ion-item>
+              <!-- Toolbar modalità di inserimento -->
+              <ion-toolbar>
+                <ion-segment [(ngModel)]="inserimentoEffetto">
+                  <ion-segment-button value="default">
+                    <ion-label>Default</ion-label>
+                  </ion-segment-button>
+                  <ion-segment-button value="custom">
+                    <ion-label>Custom</ion-label>
+                  </ion-segment-button>
+                </ion-segment>
+              </ion-toolbar>
 
-              <!-- Pulsanti chiusura modale -->
-              <div class="buttonRowModale">
-                <ion-button
-                  (click)="confirm()"
-                  color="dark"
-                  [disabled]="
-                    (!durataEffetto && !isPermanent) || !descrizioneEffetto
-                  "
-                  >Conferma</ion-button
+              <!-- Effetti default -->
+              <div *ngIf="inserimentoEffetto === 'default'">
+                <!-- Selezione effetto -->
+                <ion-item style="width: 95%">
+                  <ion-label position="stacked">Status</ion-label>
+                  <ion-select
+                    label="Status"
+                    label-placement="stacked"
+                    interface="action-sheet"
+                    placeholder="Seleziona status"
+                    [(ngModel)]="statusSelezionato"
+                  >
+                    <!-- Bel troiaio, non funziona l'ngFor per le option all'interno di una ion-modal -->
+                    <ion-select-option [value]="1">
+                      Afferrato X
+                    </ion-select-option>
+                    <ion-select-option [value]="2">
+                      Corroso X (durata Y)
+                    </ion-select-option>
+                    <ion-select-option [value]="3">
+                      Debilitato X%
+                    </ion-select-option>
+                    <ion-select-option [value]="4">
+                      Esausto (durata X)
+                    </ion-select-option>
+                    <ion-select-option [value]="5">
+                      Combattivo
+                    </ion-select-option>
+                    <ion-select-option [value]="6">
+                      Parallizzato X
+                    </ion-select-option>
+                    <ion-select-option [value]="7">
+                      Privo di sensi
+                    </ion-select-option>
+                    <ion-select-option [value]="8">
+                      Radioattivo X
+                    </ion-select-option>
+                    <ion-select-option [value]="9">
+                      Rallentato X
+                    </ion-select-option>
+                    <ion-select-option [value]="10">
+                      Resistente a risonanza X
+                    </ion-select-option>
+                    <ion-select-option [value]="11">
+                      Sanguinante X (durata Y)
+                    </ion-select-option>
+                    <ion-select-option [value]="12">
+                      Sfinito
+                    </ion-select-option>
+                    <ion-select-option [value]="13">
+                      Sovraccaricato (durata X)
+                    </ion-select-option>
+                    <ion-select-option [value]="14">
+                      Spaventato da X (durata Y)
+                    </ion-select-option>
+                    <ion-select-option [value]="15">
+                      Stordito X
+                    </ion-select-option>
+                    <ion-select-option [value]="16">
+                      Trattenuto X
+                    </ion-select-option>
+                    <ion-select-option [value]="17">
+                      Velocizzato
+                    </ion-select-option>
+                    <ion-select-option [value]="18">
+                      Vulnerabile a risonanza X
+                    </ion-select-option>
+                  </ion-select>
+                </ion-item>
+
+                <!-- Valore X -->
+                <ion-item
+                  style="width: 95%"
+                  *ngIf="getStatus(statusSelezionato).hasX"
                 >
+                  <ion-label position="stacked">Valore X</ion-label>
+                  <ion-input
+                    type="text"
+                    placeholder="Valore X"
+                    [(ngModel)]="getStatus(statusSelezionato).x"
+                  ></ion-input>
+                </ion-item>
+
+                <!-- Valore y -->
+                <ion-item
+                  style="width: 95%"
+                  *ngIf="getStatus(statusSelezionato).hasY"
+                >
+                  <ion-label position="stacked">Valore Y</ion-label>
+                  <ion-input
+                    type="text"
+                    placeholder="Valore Y"
+                    [(ngModel)]="getStatus(statusSelezionato).y"
+                  ></ion-input>
+                </ion-item>
+
+                <!-- Pulsanti chiusura modale -->
+                <div class="buttonRowModale">
+                  <ion-button (click)="cancel()" color="danger"
+                    >Annulla</ion-button
+                  >
+                  <ion-button
+                    (click)="confirm()"
+                    color="dark"
+                    [disabled]="
+                      (getStatus(statusSelezionato).hasX &&
+                        !getStatus(statusSelezionato).x) ||
+                      (getStatus(statusSelezionato).hasY &&
+                        !getStatus(statusSelezionato).y)
+                    "
+                    >Conferma</ion-button
+                  >
+                </div>
+              </div>
+
+              <!-- Effetti custom -->
+              <div *ngIf="inserimentoEffetto === 'custom'">
+                <!-- Descrizione effetto -->
+                <ion-item style="width: 95%">
+                  <ion-label position="stacked">Effetto</ion-label>
+                  <ion-input
+                    type="text"
+                    placeholder="Descrizione effetto"
+                    [(ngModel)]="descrizioneEffetto"
+                  ></ion-input>
+                </ion-item>
+                <!-- Durata effetto -->
+                <ion-item style="width: 95%">
+                  <ion-label position="stacked"
+                    >Durata turni/Utilizzi</ion-label
+                  >
+                  <ion-input
+                    type="text"
+                    type="number"
+                    placeholder="Durata effetto/Utilizzi"
+                    [disabled]="isPermanent"
+                    (ngModelChange)="isPermanent = false"
+                    [(ngModel)]="durataEffetto"
+                  ></ion-input>
+                </ion-item>
+                <!-- Effetto permanente -->
+                <ion-item style="width: 95%; margin-top: 20px">
+                  <ion-label>Senza Scadenza</ion-label>
+                  <ion-checkbox
+                    slot="start"
+                    [(ngModel)]="isPermanent"
+                    (ngModelChange)="durataEffetto = null"
+                  ></ion-checkbox>
+                </ion-item>
+
+                <!-- Pulsanti chiusura modale -->
+                <div class="buttonRowModale">
+                  <ion-button (click)="cancel()" color="danger"
+                    >Annulla</ion-button
+                  >
+                  <ion-button
+                    (click)="confirm()"
+                    color="dark"
+                    [disabled]="
+                      (!durataEffetto && !isPermanent) || !descrizioneEffetto
+                    "
+                    >Conferma</ion-button
+                  >
+                </div>
               </div>
             </ion-content>
           </ng-template>

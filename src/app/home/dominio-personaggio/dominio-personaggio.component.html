@@ -12,7 +12,8 @@
       'text-decoration': dettagli.isDead ? 'line-through' : ''
     }"
   >
-    {{ dettagli.nome }} - {{ dettagli.rage }}
+    {{ dettagli.nome }} -
+    <span style="color: darkred">{{ dettagli.rage }}</span>
   </p>
   <div>
     <!-- Gestione morente -->

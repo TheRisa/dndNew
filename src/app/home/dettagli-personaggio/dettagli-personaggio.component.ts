@@ -2,9 +2,18 @@ import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { IonModal } from '@ionic/angular';
 import { OverlayEventDetail } from '@ionic/core';
 
-import { Abilita, DettagliPersonaggio } from '../home.models';
+import { DettagliPersonaggio } from '../home.models';
 
 import { HomeService } from '../home.service';
+
+interface Status {
+  id: number;
+  name: string;
+  hasX: boolean;
+  hasY: boolean;
+  x?: string;
+  y?: string;
+}
 
 /** Classe per la gestione del componente DettagliPersonaggioComponent */
 @Component({
@@ -24,6 +33,121 @@ export class DettagliPersonaggioComponent implements OnInit {
   public durataEffetto = null;
   /** NgModel per durata effetto */
   public isPermanent = false;
+  /** NgModel per schermata di inserimento effetto */
+  public inserimentoEffetto: 'custom' | 'default' = 'default';
+  /** NgModel per inserimento status */
+  public statusSelezionato = 0;
+  /** Lista degli status selezionabili */
+  public listaStatus: Status[] = [
+    {
+      id: 1,
+      name: 'Afferrato X',
+      hasX: true,
+      hasY: false
+    },
+    {
+      id: 2,
+      name: 'Corroso X (durata Y)',
+      hasX: true,
+      hasY: true
+    },
+    {
+      id: 3,
+      name: 'Debilitato X %',
+      hasX: true,
+      hasY: false
+    },
+    {
+      id: 4,
+      name: 'Esausto (durata X)',
+      hasX: true,
+      hasY: false
+    },
+    {
+      id: 5,
+      name: 'Combattivo',
+      hasX: false,
+      hasY: false
+    },
+    {
+      id: 6,
+      name: 'Parallizzato X',
+      hasX: true,
+      hasY: false
+    },
+    {
+      id: 7,
+      name: 'Privo di sensi',
+      hasX: false,
+      hasY: false
+    },
+    {
+      id: 8,
+      name: 'Radioattivo X',
+      hasX: true,
+      hasY: false
+    },
+    {
+      id: 9,
+      name: 'Rallentato X',
+      hasX: true,
+      hasY: false
+    },
+    {
+      id: 10,
+      name: 'Resistente a risonanza X',
+      hasX: true,
+      hasY: false
+    },
+    {
+      id: 11,
+      name: 'Sanguinante X (durata Y)',
+      hasX: true,
+      hasY: true
+    },
+    {
+      id: 12,
+      name: 'Sfinito',
+      hasX: false,
+      hasY: false
+    },
+    {
+      id: 13,
+      name: 'Sovraccaricato (durata X)',
+      hasX: true,
+      hasY: false
+    },
+    {
+      id: 14,
+      name: 'Spaventato da X (durata Y)',
+      hasX: true,
+      hasY: true
+    },
+    {
+      id: 15,
+      name: 'Stordito X',
+      hasX: true,
+      hasY: false
+    },
+    {
+      id: 16,
+      name: 'Trattenuto X',
+      hasX: true,
+      hasY: false
+    },
+    {
+      id: 17,
+      name: 'Velocizzato',
+      hasX: false,
+      hasY: false
+    },
+    {
+      id: 18,
+      name: 'Vulnerabile a risonanza X',
+      hasX: true,
+      hasY: false
+    }
+  ];
 
   /**
    * Costruttore della classe
@@ -47,6 +171,16 @@ export class DettagliPersonaggioComponent implements OnInit {
   }
 
   /**
+   * Getter per status
+   *
+   * @param id Id status
+   * @returns Dettagli status selezionato
+   */
+  public getStatus(id: number): Status | undefined {
+    return this.listaStatus.find((stat) => stat.id === id);
+  }
+
+  /**
    * Chiusura modale senza effetti
    */
   public cancel(): void {
@@ -59,9 +193,18 @@ export class DettagliPersonaggioComponent implements OnInit {
   public confirm(): void {
     this.modal.dismiss(
       {
-        descrizione: this.descrizioneEffetto,
-        durata: this.durataEffetto,
-        isPermanent: this.isPermanent
+        default:
+          this.inserimentoEffetto === 'default'
+            ? this.getStatus(this.statusSelezionato)
+            : null,
+        custom:
+          this.inserimentoEffetto === 'custom'
+            ? {
+                descrizione: this.descrizioneEffetto,
+                durata: this.durataEffetto,
+                isPermanent: this.isPermanent
+              }
+            : null
       },
       'confirm'
     );
@@ -75,11 +218,37 @@ export class DettagliPersonaggioComponent implements OnInit {
   public onWillDismiss(event: Event) {
     const ev = event as CustomEvent<OverlayEventDetail<string>>;
     // Aggiorno gli effetti se conferma
-    if (ev.detail.role === 'confirm' && this.descrizioneEffetto) {
+    if (ev.detail.role === 'confirm') {
+      // Custom status
+      if (this.inserimentoEffetto === 'custom') {
+        this.homeSrvc.aggiungiEffetto({
+          descrizione: this.descrizioneEffetto,
+          durata: this.durataEffetto,
+          isPermanent: this.isPermanent
+        });
+        return;
+      }
+
+      // Conversione default status in effetto
+      const status = this.getStatus(this.statusSelezionato);
+      let descrizione = status.name;
+      descrizione = descrizione.replace('(durta X)', '').trim();
+      descrizione = descrizione.replace('X', status.x).trim();
+      descrizione = descrizione.replace('(durata Y)', '').trim();
+      descrizione = descrizione.replace('Y', status.y).trim();
+      const isPermanent = !status.name.includes('durata');
+      let durata = 0;
+      if (status.name.includes('durata X')) {
+        durata = +status.x;
+      }
+      if (status.name.includes('durata Y')) {
+        durata = +status.y;
+      }
+
       this.homeSrvc.aggiungiEffetto({
-        descrizione: this.descrizioneEffetto,
-        durata: this.durataEffetto,
-        isPermanent: this.isPermanent
+        descrizione,
+        isPermanent,
+        durata
       });
     }
 
