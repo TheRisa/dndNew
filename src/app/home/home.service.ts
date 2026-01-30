@@ -125,9 +125,9 @@ export class HomeService {
 
       // Aggiorno la perc
       personaggio.perc = personaggio.perc + personaggio.percPerTurno;
-      // Se la perc è > 300 la riporto a 300
-      if (personaggio.perc > 300) {
-        personaggio.perc = 300;
+      // Se la perc è > 400 la riporto a 400
+      if (personaggio.perc > 400) {
+        personaggio.perc = 400;
       }
     });
 
