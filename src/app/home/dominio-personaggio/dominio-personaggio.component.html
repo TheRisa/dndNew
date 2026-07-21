@@ -98,6 +98,21 @@
       >-10</ion-button
     >
   </div>
+  <!-- 50% -->
+  <div>
+    <ion-button
+      (click)="cambiaPerc($event, true, 50)"
+      [disabled]="dettagli.isDead || dettagli.isMorente"
+      color="success"
+      >+50</ion-button
+    >
+    <ion-button
+      (click)="cambiaPerc($event, false, 50)"
+      [disabled]="dettagli.isDead || dettagli.isMorente"
+      color="danger"
+      >-50</ion-button
+    >
+  </div>
   <!-- Buttons per rage -->
   <div>
     <ion-button

@@ -32,4 +32,4 @@ export const sovraccaricatoLabel = 'Sovraccaricato';
 /** Label per la descrizione dell'effetto di esausto */
 export const esaustoLabel = 'Esausto';
 /** Label per la descrizione dell'effetto di morente */
-export const morenteLabel = 'Morente';
+export const morenteLabel = 'Privo di sensi';

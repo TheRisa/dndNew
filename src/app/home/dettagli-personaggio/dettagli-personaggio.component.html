@@ -202,26 +202,26 @@
                 <!-- Valore X -->
                 <ion-item
                   style="width: 95%"
-                  *ngIf="getStatus(statusSelezionato).hasX"
+                  *ngIf="getStatus(statusSelezionato)?.hasX"
                 >
                   <ion-label position="stacked">Valore X</ion-label>
                   <ion-input
                     type="text"
                     placeholder="Valore X"
-                    [(ngModel)]="getStatus(statusSelezionato).x"
+                    [(ngModel)]="getStatus(statusSelezionato)!.x"
                   ></ion-input>
                 </ion-item>
 
                 <!-- Valore y -->
                 <ion-item
                   style="width: 95%"
-                  *ngIf="getStatus(statusSelezionato).hasY"
+                  *ngIf="getStatus(statusSelezionato)?.hasY"
                 >
                   <ion-label position="stacked">Valore Y</ion-label>
                   <ion-input
                     type="text"
                     placeholder="Valore Y"
-                    [(ngModel)]="getStatus(statusSelezionato).y"
+                    [(ngModel)]="getStatus(statusSelezionato)!.y"
                   ></ion-input>
                 </ion-item>
 
@@ -234,10 +234,10 @@
                     (click)="confirm()"
                     color="dark"
                     [disabled]="
-                      (getStatus(statusSelezionato).hasX &&
-                        !getStatus(statusSelezionato).x) ||
-                      (getStatus(statusSelezionato).hasY &&
-                        !getStatus(statusSelezionato).y)
+                      (getStatus(statusSelezionato)?.hasX &&
+                        !getStatus(statusSelezionato)?.x) ||
+                      (getStatus(statusSelezionato)?.hasY &&
+                        !getStatus(statusSelezionato)?.y)
                     "
                     >Conferma</ion-button
                   >

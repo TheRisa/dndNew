@@ -76,11 +76,12 @@ export class DominioPersonaggioComponent implements OnInit {
     this.dettagli.isMorente = true;
     this.dettagli.perc = 0;
     this.dettagli.rage = 0;
+    this.dettagli.padronanza = 0;
+    this.dettagli.superiorita = 0;
 
     this.dettagli.effettiAttivi.push({
       descrizione: morenteLabel,
-      durata: 3,
-      isPermanent: false
+      isPermanent: true
     });
   }
 
