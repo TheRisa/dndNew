@@ -18,7 +18,7 @@ export class BarraAzioniComponent implements OnInit {
   public personaggioAggiunto: DettagliPersonaggio = {
     effettiAttivi: [],
     nome: undefined,
-    perc: 0,
+    perc: 50,
     percPerTurno: 0,
     rage: 0,
     superiorita: 0,
@@ -51,7 +51,6 @@ export class BarraAzioniComponent implements OnInit {
    */
   public openAddModal(): void {
     this.personaggioAggiunto.nome = undefined;
-    this.personaggioAggiunto.perc = undefined;
     this.personaggioAggiunto.percPerTurno = undefined;
     this.modal.present();
   }

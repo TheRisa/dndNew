@@ -39,14 +39,6 @@
           [(ngModel)]="personaggioAggiunto.nome"
         ></ion-input>
       </ion-item>
-      <!-- Rapidità attuale -->
-      <ion-item>
-        <ion-input
-          type="number"
-          placeholder="Rapidità attuale"
-          [(ngModel)]="personaggioAggiunto.perc"
-        ></ion-input>
-      </ion-item>
       <!-- Rapidità per turno -->
       <ion-item>
         <ion-input
@@ -61,10 +53,7 @@
       <ion-button
         expand="block"
         [disabled]="
-          !personaggioAggiunto.nome ||
-          personaggioAggiunto.perc === null ||
-          personaggioAggiunto.perc === undefined ||
-          !personaggioAggiunto.percPerTurno
+          !personaggioAggiunto.nome || !personaggioAggiunto.percPerTurno
         "
         (click)="aggiungiPersonaggio()"
         style="margin: 15px 10px"

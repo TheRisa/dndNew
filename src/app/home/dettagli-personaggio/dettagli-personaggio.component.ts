@@ -300,10 +300,10 @@ export class DettagliPersonaggioComponent implements OnInit {
     }
 
     let dado = '1d4';
-    if (padronanza > 1) {
+    if (padronanza > 1 || padronanza < -1) {
       dado = '1d8';
     }
-    if (padronanza > 2) {
+    if (padronanza > 2 || padronanza < -2) {
       dado = '1d12';
     }
     // Valore positivo -> si aggiungono danni
