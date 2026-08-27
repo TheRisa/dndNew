@@ -259,21 +259,56 @@ export class DettagliPersonaggioComponent implements OnInit {
   }
 
   /**
-   * Metodo al clisk sui pulsanti di gestione superiorità
+   * Metodo al click sui pulsanti di gestione superiorità
    *
    * @param isSup Flag che indica se aggiungere superiorità o inferiorità
    */
   public cambiaSup(isSup: boolean): void {
-    this.personaggio.superiorita = isSup
-      ? this.personaggio.superiorita + 1
-      : this.personaggio.superiorita - 1;
+    if (isSup) {
+      this.personaggio.superiorita = this.personaggio.superiorita + 1;
+      if (this.personaggio.superiorita > 2) {
+        this.personaggio.superiorita = 2;
+        if (this.personaggio.inferiorita > 0) {
+          this.personaggio.inferiorita = this.personaggio.inferiorita - 1;
+        }
+      }
+      return;
+    }
 
-    if (this.personaggio.superiorita > 2) {
-      this.personaggio.superiorita = 2;
+    this.personaggio.inferiorita = this.personaggio.inferiorita + 1;
+    if (this.personaggio.inferiorita > 2) {
+      this.personaggio.inferiorita = 2;
+      if (this.personaggio.superiorita > 0) {
+        this.personaggio.superiorita = this.personaggio.superiorita - 1;
+      }
     }
-    if (this.personaggio.superiorita < -2) {
-      this.personaggio.superiorita = -2;
+  }
+
+  /**
+   * Metodo al click sul pulsante di reset sup/inf
+   */
+  public resetSup(): void {
+    this.personaggio.superiorita = 0;
+    this.personaggio.inferiorita = 0;
+  }
+
+  public calcolaDadoSup(): string {
+    if (this.personaggio.superiorita === 1) {
+      return 'Elimina il risultato peggiore';
     }
+    if (this.personaggio.superiorita === 2) {
+      return 'Elimina i due risultati peggiori';
+    }
+    return '';
+  }
+  public calcolaDadoInf(): string {
+    if (this.personaggio.inferiorita === 1) {
+      return 'Elimina il risultato migliore';
+    }
+    if (this.personaggio.inferiorita === 2) {
+      return 'Elimina i due risultati migliori';
+    }
+    return '';
   }
 
   /**
@@ -285,6 +320,13 @@ export class DettagliPersonaggioComponent implements OnInit {
     this.personaggio.padronanza = isPadronanza
       ? this.personaggio.padronanza + 1
       : this.personaggio.padronanza - 1;
+  }
+
+  /**
+   * Metodo al click sul pulsante di reset padronanza
+   */
+  public resetPadronanza(): void {
+    this.personaggio.padronanza = 0;
   }
 
   /**

@@ -26,26 +26,43 @@
             color="danger"
             >-</ion-button
           >
+          <ion-button
+            (click)="resetSup()"
+            [disabled]="personaggio.isDead"
+            color="medium"
+            >Ø</ion-button
+          >
         </div>
       </div>
       <!-- Nessun sup/inf -->
       <p
         style="width: 100%; text-align: center"
-        *ngIf="personaggio.superiorita === 0"
+        *ngIf="personaggio.superiorita === 0 && personaggio.inferiorita === 0"
       >
         Nessun livello di Superiorità o Inferioità
       </p>
       <!-- Sup/inf -->
       <p
         style="width: 100%; text-align: center"
-        *ngIf="personaggio.superiorita !== 0"
+        *ngIf="personaggio.superiorita !== 0 || personaggio.inferiorita !== 0"
       >
         {{
           personaggio.superiorita > 0
-            ? personaggio.superiorita
-            : personaggio.superiorita * -1
+            ? personaggio.superiorita + ' Superiorità'
+            : ''
         }}
-        {{ personaggio.superiorita > 0 ? 'Superiorità' : 'Inferiorità' }}
+        {{
+          personaggio.inferiorita > 0
+            ? personaggio.inferiorita + ' Inferiorità'
+            : ''
+        }}
+        <br />
+        <br />
+        Lancia {{ personaggio.superiorita + personaggio.inferiorita + 1 }} d20
+        <br *ngIf="personaggio.superiorita !== 0" />
+        {{ calcolaDadoSup() }}
+        <br *ngIf="personaggio.inferiorita !== 0" />
+        {{ calcolaDadoInf() }}
       </p>
 
       <!-- Padronanza/sfinimento -->
@@ -64,6 +81,12 @@
             [disabled]="personaggio.isDead"
             color="danger"
             >-</ion-button
+          >
+          <ion-button
+            (click)="resetPadronanza()"
+            [disabled]="personaggio.isDead"
+            color="medium"
+            >Ø</ion-button
           >
         </div>
       </div>

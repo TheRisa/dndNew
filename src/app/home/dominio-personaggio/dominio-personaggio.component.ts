@@ -17,6 +17,7 @@ export class DominioPersonaggioComponent implements OnInit {
     percPerTurno: 0,
     rage: 0,
     superiorita: 0,
+    inferiorita: 0,
     padronanza: 0,
     effettiAttivi: []
   };

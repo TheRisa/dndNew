@@ -1,10 +1,11 @@
 /** Interfaccia per i dettagli di un personaggio */
 export interface DettagliPersonaggio {
-  nome: string;
+  nome: string | undefined;
   perc: number;
   percPerTurno: number;
   rage: number;
   superiorita: number;
+  inferiorita: number;
   padronanza: number;
   effettiAttivi: Effetto[];
   isMorente?: boolean;
