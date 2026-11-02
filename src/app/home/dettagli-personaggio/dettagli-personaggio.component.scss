@@ -1,13 +1,16 @@
 .container {
   width: 100%;
-  min-width: 500px;
+  padding-bottom: 8px;
 }
 
 .name {
-  padding: 0 20px;
+  margin: 6px 0 12px;
+  padding: 0 20px 8px;
   text-align: center;
-  font-size: 24px;
-  font-weight: bold;
+  font-size: 22px;
+  font-weight: 750;
+  letter-spacing: 0.01em;
+  border-bottom: 1px solid #e6e9f0;
 }
 
 .nomeContainer {
@@ -41,9 +44,10 @@
 .body {
   width: 100%;
   display: flex;
-  justify-content: flex-start;
-  align-items: start;
+  justify-content: center;
+  align-items: stretch;
   flex-wrap: wrap;
+  gap: 12px;
 }
 
 .full-body {
@@ -52,33 +56,133 @@
 }
 
 .half-body {
-  width: 50%;
-  padding: 0 3%;
+  flex: 1 1 360px;
+  min-width: 0;
+  max-width: 720px;
+  padding: 12px 16px;
+  border: 1px solid #e6e9f0;
+  border-radius: 16px;
+  background: #fff;
+  box-shadow: 0 4px 14px rgba(34, 45, 70, 0.06);
 }
 
 @media screen and (max-width: 720px) {
   .half-body {
-    width: 100%;
+    flex-basis: 100%;
+    padding: 12px;
   }
 }
 
 .title {
-  font-size: 20px;
-  text-align: center;
-  height: 40px;
-  margin: 15px 0;
+  min-height: 34px;
+  margin: 0 0 10px;
+  padding-bottom: 8px;
   width: 100%;
-  display: flex;
-  justify-content: center;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 122px;
   align-items: center;
+  color: #263248;
+  font-size: 18px;
+  font-weight: 700;
+  text-align: left;
+  border-bottom: 1px solid #edf0f5;
+}
+
+.title-label {
+  grid-column: 1;
+}
+
+.title-padronanza {
+  margin-top: 20px;
+}
+
+.title-actions {
+  grid-column: 2;
+  width: 122px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 4px;
+  margin-left: 0;
+}
+
+.title ion-button,
+.buttons ion-button {
+  align-self: center;
+  width: 38px;
+  min-width: 38px;
+  --padding-start: 0;
+  --padding-end: 0;
+  margin: 0;
+  font-weight: 700;
+}
+
+.detail-card ion-button.detail-positive::part(native) {
+  background: rgba(185, 168, 218, 0.18);
+  border: 2px solid #77629e;
+  color: #665287;
+}
+
+.detail-card ion-button.detail-negative::part(native) {
+  background: rgba(231, 190, 154, 0.2);
+  border: 2px solid #ad7448;
+  color: #94613a;
+}
+
+.detail-card ion-button.effect-add::part(native) {
+  background: rgba(164, 203, 210, 0.2);
+  border: 2px solid #5b8992;
+  color: #4a737b;
+}
+
+@media (hover: hover) {
+  .detail-card ion-button.detail-positive:not([disabled]):hover::part(native) {
+    background: #77629e;
+    border-color: #77629e;
+    color: #fff;
+  }
+
+  .detail-card ion-button.detail-negative:not([disabled]):hover::part(native) {
+    background: #ad7448;
+    border-color: #ad7448;
+    color: #fff;
+  }
+
+  .detail-card ion-button.effect-add:not([disabled]):hover::part(native) {
+    background: #5b8992;
+    border-color: #5b8992;
+    color: #fff;
+  }
+}
+
+.detail-copy {
+  width: 100%;
+  margin: 8px 0;
+  color: #536176;
+  font-size: 14px;
+  line-height: 1.55;
+  text-align: center;
 }
 
 .effetto {
   width: 100%;
-  margin: 5px 0;
+  margin: 6px 0;
+  padding: 7px 10px;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 10px;
+  border: 1px solid #e8ebf1;
+  border-radius: 10px;
+  background: #f8f9fc;
+}
+
+.effetto p {
+  overflow-wrap: anywhere;
+}
+
+.effetto ion-button {
+  margin: 0;
 }
 
 .statisticaContainer {
@@ -129,8 +233,9 @@
   align-items: center;
   justify-content: center;
   &::part(content) {
-    width: 500px;
-    height: 380px;
+    width: min(500px, calc(100vw - 24px));
+    height: min(520px, 85vh);
+    border-radius: 16px;
   }
 }
 

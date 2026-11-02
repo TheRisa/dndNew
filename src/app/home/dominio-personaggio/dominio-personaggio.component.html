@@ -1,140 +1,202 @@
-<!-- Content -->
-<div
-  class="content hover default-black"
-  (click)="homeSrvc.setPersonaggioSelezionato(indice)"
-  [ngStyle]="{ 'background-color': dettagli.selected ? '#dd65a22e' : '' }"
->
-  <!-- Nome personaggio -->
-  <p
-    class="nome"
-    [ngStyle]="{
-      'font-weight': dettagli.selected ? 'bold' : '',
-      'text-decoration': dettagli.isDead ? 'line-through' : ''
-    }"
+<ion-accordion-group class="personaggio-group">
+  <ion-accordion
+    [value]="'personaggio-' + indice"
+    [class.personaggio-selezionato]="dettagli.selected"
+    class="personaggio-accordion"
   >
-    {{ dettagli.nome }} -
-    <span style="color: darkred">{{ dettagli.rage }}</span>
-  </p>
-  <div>
-    <!-- Gestione morente -->
-    <ion-icon
-      *ngIf="!dettagli.isDead"
-      [name]="dettagli.isMorente ? 'heart-dislike-outline' : 'heart-outline'"
-      (click)="setDeath()"
-      [color]="dettagli.isMorente ? 'danger' : 'success'"
-    ></ion-icon>
-    <!-- Personaggio morto -->
-    <ion-icon
-      *ngIf="dettagli.isDead"
-      name="skull-outline"
-      (click)="setDeath()"
-      color="medium"
-    ></ion-icon>
-  </div>
-  <!-- Percentuale rapidità -->
-  <div
-    class="percBarContainer"
-    [ngStyle]="{ 'background-color': calcolaBackground() }"
-  >
-    <!-- Gestione barra per percentuali positive -->
-    <div
-      *ngIf="dettagli.perc > 0"
-      class="percBar"
-      [ngStyle]="{
-        width: (dettagli.perc % 100) + '%',
-        'background-color': dettagli.perc > 100 ? '#8af58a' : '#efef74'
-      }"
-    ></div>
-    <!-- Gestione barra per percentuali negative -->
-    <div
-      *ngIf="dettagli.perc < 0"
-      class="percBar"
-      [ngStyle]="{
-        width: (-dettagli.perc % 100) + '%',
-        'background-color': dettagli.perc < -100 ? '#eb7676' : '#f7ce83'
-      }"
-    ></div>
-    <!-- Stringa di % -->
-    <div
-      class="percAlign"
-      [ngStyle]="{ top: dettagli.perc === 0 ? '5px' : '-25px' }"
+    <ion-item
+      slot="header"
+      lines="none"
+      class="accordion-heading"
+      (click)="homeSrvc.setPersonaggioSelezionato(indice)"
     >
-      <input
-        class="percInput no-margin"
-        [(ngModel)]="dettagli.perc"
-        type="number"
-      />
-      <p class="no-margin">%</p>
+      <ion-label>
+        <div class="heading-content">
+          <div class="identita">
+            <span
+              class="nome"
+              [ngStyle]="{
+                'font-weight': dettagli.selected ? 'bold' : '',
+                'text-decoration': dettagli.isDead ? 'line-through' : ''
+              }"
+            >
+              {{ dettagli.nome }}
+            </span>
+            <span class="rage">Rabbia {{ dettagli.rage }}</span>
+            <span
+              class="statoPersonaggio"
+              [class.statoMorente]="dettagli.isMorente"
+              [class.statoMorto]="dettagli.isDead"
+              role="button"
+              tabindex="0"
+              (click)="setDeath($event)"
+              (keydown.enter)="setDeath($event)"
+              (keydown.space)="setDeath($event)"
+            >
+              <ion-icon
+                *ngIf="!dettagli.isDead"
+                [name]="
+                  dettagli.isMorente ? 'heart-dislike-outline' : 'heart-outline'
+                "
+                [color]="dettagli.isMorente ? 'danger' : 'success'"
+              ></ion-icon>
+              <ion-icon
+                *ngIf="dettagli.isDead"
+                name="skull-outline"
+                color="medium"
+              ></ion-icon>
+              <span *ngIf="dettagli.isDead">Morto</span>
+              <span *ngIf="!dettagli.isDead && dettagli.isMorente"
+                >Morente</span
+              >
+              <span *ngIf="!dettagli.isDead && !dettagli.isMorente">Vivo</span>
+            </span>
+          </div>
+
+          <div class="rapidita">
+            <div
+              class="percBarContainer"
+              [ngStyle]="{ 'background-color': calcolaBackground() }"
+            >
+              <div
+                *ngIf="dettagli.perc > 0"
+                class="percBar"
+                [ngStyle]="{
+                  width: (dettagli.perc % 100) + '%',
+                  'background-color':
+                    dettagli.perc > 100 ? '#8af58a' : '#efef74'
+                }"
+              ></div>
+              <div
+                *ngIf="dettagli.perc < 0"
+                class="percBar"
+                [ngStyle]="{
+                  width: (-dettagli.perc % 100) + '%',
+                  'background-color':
+                    dettagli.perc < -100 ? '#eb7676' : '#f7ce83'
+                }"
+              ></div>
+              <div class="percAlign">
+                <input
+                  class="percInput no-margin"
+                  [(ngModel)]="dettagli.perc"
+                  type="number"
+                  (change)="normalizzaPerc()"
+                  (click)="
+                    $event.stopPropagation();
+                    homeSrvc.setPersonaggioSelezionato(indice)
+                  "
+                />
+                <span>%</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ion-label>
+    </ion-item>
+
+    <div slot="content" class="accordion-body">
+      <div class="azioni">
+        <div class="gruppoAzioni">
+          <span class="azione-label">Rapidità</span>
+          <div class="controlli">
+            <ion-button
+              (click)="cambiaPerc($event, true, 1)"
+              [disabled]="dettagli.isDead || dettagli.isMorente"
+              fill="solid"
+              color="success"
+              >+1</ion-button
+            >
+            <ion-button
+              (click)="cambiaPerc($event, false, 1)"
+              [disabled]="dettagli.isDead || dettagli.isMorente"
+              fill="solid"
+              color="danger"
+              >-1</ion-button
+            >
+            <ion-button
+              (click)="cambiaPerc($event, true, 10)"
+              [disabled]="dettagli.isDead || dettagli.isMorente"
+              fill="solid"
+              color="success"
+              >+10</ion-button
+            >
+            <ion-button
+              (click)="cambiaPerc($event, false, 10)"
+              [disabled]="dettagli.isDead || dettagli.isMorente"
+              fill="solid"
+              color="danger"
+              >-10</ion-button
+            >
+            <ion-button
+              (click)="cambiaPerc($event, true, 50)"
+              [disabled]="dettagli.isDead || dettagli.isMorente"
+              fill="solid"
+              color="success"
+              >+50</ion-button
+            >
+            <ion-button
+              (click)="cambiaPerc($event, false, 50)"
+              [disabled]="dettagli.isDead || dettagli.isMorente"
+              fill="solid"
+              color="danger"
+              >-50</ion-button
+            >
+          </div>
+        </div>
+
+        <div class="gruppoAzioni">
+          <span class="azione-label">Rabbia</span>
+          <div class="controlli">
+            <ion-button
+              (click)="setRage(true, $event)"
+              [disabled]="dettagli.isDead || dettagli.isMorente"
+              fill="solid"
+              color="primary"
+              >+1</ion-button
+            >
+            <ion-button
+              (click)="setRage(false, $event)"
+              [disabled]="
+                dettagli.isDead || dettagli.isMorente || dettagli.rage === 0
+              "
+              fill="solid"
+              color="warning"
+              >-1</ion-button
+            >
+            <ion-button
+              (click)="setRage(true, $event, 5)"
+              [disabled]="dettagli.isDead || dettagli.isMorente"
+              fill="solid"
+              color="primary"
+              >+5</ion-button
+            >
+            <ion-button
+              (click)="setRage(false, $event, 5)"
+              [disabled]="
+                dettagli.isDead || dettagli.isMorente || dettagli.rage === 0
+              "
+              fill="solid"
+              color="warning"
+              >-5</ion-button
+            >
+          </div>
+        </div>
+
+        <ion-button
+          *ngIf="dettagli.selected && !dettagli.isDead && !dettagli.isMorente"
+          class="completa-turno"
+          (click)="homeSrvc.completaTurno()"
+          [disabled]="dettagli.perc < 101"
+          fill="solid"
+          color="dark"
+          >Completa Turno</ion-button
+        >
+      </div>
+
+      <app-dettagli-personaggio
+        [personaggio]="dettagli"
+      ></app-dettagli-personaggio>
     </div>
-  </div>
-  <!-- Button di gestione % -->
-  <!-- 1% -->
-  <div>
-    <ion-button
-      (click)="cambiaPerc($event, true, 1)"
-      [disabled]="dettagli.isDead || dettagli.isMorente"
-      color="success"
-      >+1</ion-button
-    >
-    <ion-button
-      (click)="cambiaPerc($event, false, 1)"
-      [disabled]="dettagli.isDead || dettagli.isMorente"
-      color="danger"
-      >-1</ion-button
-    >
-  </div>
-  <!-- 10% -->
-  <div>
-    <ion-button
-      (click)="cambiaPerc($event, true, 10)"
-      [disabled]="dettagli.isDead || dettagli.isMorente"
-      color="success"
-      >+10</ion-button
-    >
-    <ion-button
-      (click)="cambiaPerc($event, false, 10)"
-      [disabled]="dettagli.isDead || dettagli.isMorente"
-      color="danger"
-      >-10</ion-button
-    >
-  </div>
-  <!-- 50% -->
-  <div>
-    <ion-button
-      (click)="cambiaPerc($event, true, 50)"
-      [disabled]="dettagli.isDead || dettagli.isMorente"
-      color="success"
-      >+50</ion-button
-    >
-    <ion-button
-      (click)="cambiaPerc($event, false, 50)"
-      [disabled]="dettagli.isDead || dettagli.isMorente"
-      color="danger"
-      >-50</ion-button
-    >
-  </div>
-  <!-- Buttons per rage -->
-  <div>
-    <ion-button
-      (click)="setRage(true, $event)"
-      [disabled]="dettagli.isDead || dettagli.isMorente"
-      color="primary"
-      >↑</ion-button
-    >
-    <ion-button
-      (click)="setRage(false, $event)"
-      [disabled]="dettagli.isDead || dettagli.isMorente || dettagli.rage === 0"
-      color="warning"
-      >↓</ion-button
-    >
-  </div>
-</div>
-<!-- Completa turno -->
-<div
-  class="buttonRow"
-  *ngIf="dettagli.selected && !dettagli.isDead && !dettagli.isMorente"
->
-  <ion-button (click)="homeSrvc.completaTurno()" color="dark"
-    >Completa Turno</ion-button
-  >
-</div>
+  </ion-accordion>
+</ion-accordion-group>

@@ -1,40 +1,38 @@
 .container {
-  margin-top: 15px;
-  padding-left: 2%;
-  padding-right: 2%;
+  max-width: 1680px;
+  margin: 0 auto;
+  padding: 20px 3%;
   width: 100%;
 }
 
 .containerDomini {
   width: 100%;
-  max-height: 410px;
-  overflow-x: hidden;
-  overflow-y: auto;
+  display: block;
+  overflow: visible;
+  background: transparent;
 }
 
-.containerDettagli {
-  width: 100%;
-  overflow-x: auto;
+.empty-state {
+  margin: 20px 0;
+  color: #64748b;
+  font-size: 18px;
+  text-align: center;
 }
 
 @media screen and (max-width: 992px) {
   .container {
-    padding-left: 5%;
-    padding-right: 5%;
-  }
-
-  .containerDomini {
-    overflow-x: auto;
+    padding-right: 4%;
+    padding-left: 4%;
   }
 }
 
 @media screen and (max-width: 720px) {
   .container {
-    padding-left: 2%;
-    padding-right: 2%;
+    padding: 12px 3%;
   }
 
-  .containerDomini {
-    overflow-x: auto;
-  }
+}
+
+ion-content {
+  --background: #f4f6fa;
 }

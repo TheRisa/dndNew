@@ -181,6 +181,13 @@ export class DettagliPersonaggioComponent implements OnInit {
   }
 
   /**
+   * Apre la modale degli effetti di questo personaggio
+   */
+  public apriModale(): void {
+    this.modal.present();
+  }
+
+  /**
    * Chiusura modale senza effetti
    */
   public cancel(): void {

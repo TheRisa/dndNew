@@ -1,4 +1,13 @@
-import { Component, Input, OnInit } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  Input,
+  OnChanges,
+  OnInit,
+  SimpleChanges,
+  ViewChild
+} from '@angular/core';
+import { IonAccordionGroup } from '@ionic/angular';
 
 import { DettagliPersonaggio, morenteLabel } from '../home.models';
 import { HomeService } from '../home.service';
@@ -9,7 +18,9 @@ import { HomeService } from '../home.service';
   templateUrl: './dominio-personaggio.component.html',
   styleUrls: ['./dominio-personaggio.component.scss']
 })
-export class DominioPersonaggioComponent implements OnInit {
+export class DominioPersonaggioComponent
+  implements OnInit, OnChanges, AfterViewInit
+{
   /** Dettagli da mostrare */
   @Input() dettagli: DettagliPersonaggio = {
     nome: '',
@@ -23,6 +34,12 @@ export class DominioPersonaggioComponent implements OnInit {
   };
   /** Indice del dominio */
   @Input() indice = -1;
+  /** Valore dell'accordion associato al personaggio selezionato */
+  @Input() selectedAccordionValue: string | null = null;
+  /** Versione dell'apertura forzata dopo il completamento turno */
+  @Input() accordionOpenVersion = 0;
+  /** Gruppo accordion del personaggio */
+  @ViewChild(IonAccordionGroup) accordionGroup: IonAccordionGroup;
 
   /**
    * Costruttore della classe
@@ -36,21 +53,67 @@ export class DominioPersonaggioComponent implements OnInit {
    */
   ngOnInit() {}
 
+  ngOnChanges(changes: SimpleChanges): void {
+    const accordionValue = `personaggio-${this.indice}`;
+
+    if (
+      changes.selectedAccordionValue &&
+      this.selectedAccordionValue !== accordionValue &&
+      this.accordionGroup
+    ) {
+      this.accordionGroup.value = null;
+    }
+
+    if (changes.accordionOpenVersion && this.accordionGroup) {
+      this.accordionGroup.value = null;
+
+      if (this.dettagli.selected) {
+        this.openSelectedAccordionAfterClose();
+      }
+    }
+  }
+
+  private openSelectedAccordionAfterClose(): void {
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        if (this.dettagli.selected && this.accordionGroup) {
+          this.accordionGroup.value = `personaggio-${this.indice}`;
+        }
+      });
+    });
+  }
+
+  ngAfterViewInit(): void {
+    if (this.selectedAccordionValue === `personaggio-${this.indice}`) {
+      setTimeout(() => {
+        if (this.dettagli.selected && this.accordionGroup) {
+          this.accordionGroup.value = `personaggio-${this.indice}`;
+        }
+      });
+    }
+  }
+
   /**
    * Metodo al click sulle frecce accanto alla rage
    *
    * @param isUp True se la rage va aumentata, false se va diminuita
    */
-  public setRage(isUp: boolean, $event: any): void {
+  public setRage(isUp: boolean, $event: any, amount = 1): void {
     $event.stopPropagation();
-    this.dettagli.rage = isUp ? this.dettagli.rage + 1 : this.dettagli.rage - 1;
+    this.dettagli.rage = isUp
+      ? this.dettagli.rage + amount
+      : this.dettagli.rage - amount;
     this.dettagli.rage = this.dettagli.rage < 0 ? 0 : this.dettagli.rage;
   }
 
   /**
    * Metodo al click sul pulsante di morte. Imposta il personaggio come morente
    */
-  public setDeath(): void {
+  public setDeath(event: Event): void {
+    event.preventDefault();
+    event.stopPropagation();
+    this.homeSrvc.setPersonaggioSelezionato(this.indice);
+
     // La logica è: 1 - se sono vivo diventa morente, 2 - se sono morente diventa morto, 3 - se sono morto torno vivo
     // Elimino l'effetto di morente (al limite viene rimpostato nel terzo caso)
     this.dettagli.effettiAttivi = this.dettagli.effettiAttivi.filter(
@@ -100,17 +163,15 @@ export class DominioPersonaggioComponent implements OnInit {
     // Blocco altri click
     event.stopPropagation();
     // Aggiorno perc
-    this.dettagli.perc = incremento
-      ? this.dettagli.perc + valoreIncremento
-      : this.dettagli.perc - valoreIncremento;
-    // Se la perc è 300 o più torno al 300%
-    if (incremento && this.dettagli.perc >= 300) {
-      this.dettagli.perc = 300;
-    }
-    // Se la perc è -200 o meno torno al -200%
-    if (!incremento && this.dettagli.perc <= -200) {
-      this.dettagli.perc = -200;
-    }
+    this.dettagli.perc += incremento ? valoreIncremento : -valoreIncremento;
+    this.normalizzaPerc();
+  }
+
+  /**
+   * Mantiene la rapidità tra -200% e 300%, anche dopo l'inserimento manuale.
+   */
+  public normalizzaPerc(): void {
+    this.dettagli.perc = Math.max(-200, Math.min(300, this.dettagli.perc));
   }
 
   /**

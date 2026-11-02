@@ -9,6 +9,8 @@ import { DettagliPersonaggio, Effetto, morenteLabel } from './home.models';
 export class HomeService {
   /** Lista dei personaggi da mostrare */
   private personaggi: DettagliPersonaggio[] = [];
+  /** Versione incrementata quando il completamento turno deve aprire il primo accordion */
+  private accordionOpenVersion = 0;
 
   /**
    * Costruttore della classe
@@ -43,6 +45,27 @@ export class HomeService {
   }
 
   /**
+   * Restituisce il valore dell'accordion del personaggio selezionato
+   *
+   * @returns Valore accordion selezionato o null se non c'è selezione
+   */
+  public getSelectedAccordionValue(): string | null {
+    const indice = this.personaggi.findIndex(
+      (personaggio) => personaggio.selected
+    );
+    return indice < 0 ? null : `personaggio-${indice}`;
+  }
+
+  /**
+   * Restituisce la versione dell'apertura automatica degli accordion
+   *
+   * @returns Versione corrente
+   */
+  public getAccordionOpenVersion(): number {
+    return this.accordionOpenVersion;
+  }
+
+  /**
    * Setter del personaggio selezionato in base all'indice
    *
    * @param indice Indice del personaggio cliccato
@@ -65,14 +88,7 @@ export class HomeService {
     // Variabile di appoggio
     const personaggio = this.getPersonaggioSelezionato();
     if (personaggio) {
-      // Se è < -200 la riporto a -200
-      if (personaggio.perc < -200) {
-        personaggio.perc = -200;
-      }
-      // Se è > 100 la riporto a 100
-      if (personaggio.perc > 100) {
-        personaggio.perc = 100;
-      }
+      this.limitaRapidita(personaggio);
 
       // Riduco di 1 turno gli effetti attivi (non permanenti)
       personaggio.effettiAttivi.forEach(
@@ -89,6 +105,7 @@ export class HomeService {
       // Riordino i personaggi
       this.riordinaPersonaggi();
       this.setPersonaggioSelezionato(0);
+      this.accordionOpenVersion++;
     }
   }
 
@@ -125,10 +142,7 @@ export class HomeService {
 
       // Aggiorno la perc
       personaggio.perc = personaggio.perc + personaggio.percPerTurno;
-      // Se la perc è > 400 la riporto a 400
-      if (personaggio.perc > 400) {
-        personaggio.perc = 400;
-      }
+      this.limitaRapidita(personaggio);
     });
 
     // Riordino i personaggi
@@ -179,5 +193,9 @@ export class HomeService {
     this.personaggi.sort(
       (personaggio1, personaggio2) => personaggio2.perc - personaggio1.perc
     );
+  }
+
+  private limitaRapidita(personaggio: DettagliPersonaggio): void {
+    personaggio.perc = Math.max(-200, Math.min(300, personaggio.perc));
   }
 }

@@ -36,3 +36,206 @@
 .default-black {
   color: rgb(20, 19, 19);
 }
+
+ion-button:not(.header-icon-button) {
+  --border-radius: 10px;
+  --background: rgba(148, 163, 184, 0.08);
+  --background-hover: rgba(148, 163, 184, 0.14);
+  --background-activated: rgba(148, 163, 184, 0.2);
+  --color: #334155;
+  --border-color: #cbd5e1;
+  --border-style: solid;
+  --border-width: 2px;
+  --box-shadow: 0 2px 5px rgba(27, 39, 61, 0.06);
+  --padding-start: 15px;
+  --padding-end: 15px;
+  height: 30px !important;
+  min-height: 30px !important;
+  --padding-top: 0;
+  --padding-bottom: 0;
+  font-size: 0.875rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  text-transform: none;
+}
+
+ion-button::part(native) {
+  transition: transform 140ms ease, filter 140ms ease, box-shadow 140ms ease;
+}
+
+ion-button:not([disabled]):active::part(native) {
+  transform: scale(0.97);
+}
+
+ion-button:focus-visible::part(native) {
+  outline: 3px solid rgba(var(--ion-color-primary-rgb), 0.35);
+  outline-offset: 2px;
+}
+
+ion-button[color='light'] {
+  --background: rgba(203, 212, 225, 0.08);
+  --background-hover: rgba(203, 212, 225, 0.14);
+  --background-activated: rgba(203, 212, 225, 0.2);
+  --color: #56647a;
+  --border-color: #cbd4e1;
+  --box-shadow: 0 2px 7px rgba(27, 39, 61, 0.08);
+}
+
+ion-button[color='success'] {
+  --background: rgba(168, 209, 182, 0.1);
+  --background-hover: rgba(168, 209, 182, 0.16);
+  --background-activated: rgba(168, 209, 182, 0.23);
+  --color: #4e8d69;
+  --border-color: #a8d1b6;
+  --border-style: solid;
+  --border-width: 2px;
+  --box-shadow: 0 2px 6px rgba(78, 141, 105, 0.1);
+}
+
+ion-button[color='danger'] {
+  --background: rgba(227, 170, 177, 0.1);
+  --background-hover: rgba(227, 170, 177, 0.16);
+  --background-activated: rgba(227, 170, 177, 0.23);
+  --color: #b95d69;
+  --border-color: #e3aab1;
+  --border-style: solid;
+  --border-width: 2px;
+  --box-shadow: 0 2px 6px rgba(185, 93, 105, 0.1);
+}
+
+ion-button[color='primary'] {
+  --background: rgba(169, 191, 223, 0.1);
+  --background-hover: rgba(169, 191, 223, 0.16);
+  --background-activated: rgba(169, 191, 223, 0.23);
+  --color: #5276ad;
+  --border-color: #a9bfdf;
+  --box-shadow: 0 2px 6px rgba(82, 118, 173, 0.1);
+}
+
+ion-button[color='warning'] {
+  --background: rgba(225, 207, 145, 0.12);
+  --background-hover: rgba(225, 207, 145, 0.18);
+  --background-activated: rgba(225, 207, 145, 0.25);
+  --color: #92752e;
+  --border-color: #e1cf91;
+  --box-shadow: 0 2px 6px rgba(146, 117, 46, 0.1);
+}
+
+ion-button[color='dark'] {
+  --background: rgba(181, 191, 206, 0.1);
+  --background-hover: rgba(181, 191, 206, 0.16);
+  --background-activated: rgba(181, 191, 206, 0.23);
+  --color: #505d71;
+  --border-color: #b5bfce;
+  --box-shadow: 0 2px 6px rgba(80, 93, 113, 0.1);
+}
+
+ion-button[color='medium'] {
+  --background: rgba(196, 201, 209, 0.1);
+  --background-hover: rgba(196, 201, 209, 0.16);
+  --background-activated: rgba(196, 201, 209, 0.23);
+  --color: #737b89;
+  --border-color: #c4c9d1;
+  --box-shadow: 0 2px 6px rgba(115, 123, 137, 0.08);
+}
+
+ion-button[color='light']::part(native) {
+  background: rgba(203, 212, 225, 0.16);
+  border: 2px solid #aeb9ca;
+  color: #56647a;
+}
+
+ion-button[color='success']::part(native) {
+  background: rgba(168, 209, 182, 0.2);
+  border: 2px solid #4e8d69;
+  color: #3f7958;
+}
+
+ion-button[color='danger']::part(native) {
+  background: rgba(227, 170, 177, 0.2);
+  border: 2px solid #b95d69;
+  color: #a64b58;
+}
+
+ion-button[color='primary']::part(native) {
+  background: rgba(169, 191, 223, 0.2);
+  border: 2px solid #5276ad;
+  color: #456a9f;
+}
+
+ion-button[color='warning']::part(native) {
+  background: rgba(225, 207, 145, 0.22);
+  border: 2px solid #92752e;
+  color: #806322;
+}
+
+ion-button[color='dark']::part(native) {
+  background: rgba(181, 191, 206, 0.2);
+  border: 2px solid #505d71;
+  color: #455266;
+}
+
+ion-button[color='medium']::part(native) {
+  background: rgba(196, 201, 209, 0.2);
+  border: 2px solid #737b89;
+  color: #626b79;
+}
+
+ion-button[disabled] {
+  opacity: 1;
+}
+
+ion-button[disabled]::part(native) {
+  border-color: #b8bec8 !important;
+  color: #858d9a !important;
+}
+
+@media (hover: hover) {
+  ion-button[color='light']:not([disabled]):hover::part(native) {
+    background: #aeb9ca;
+    border-color: #aeb9ca;
+    color: #fff;
+  }
+
+  ion-button[color='success']:not([disabled]):hover::part(native) {
+    background: #4e8d69;
+    border-color: #4e8d69;
+    color: #fff;
+  }
+
+  ion-button[color='danger']:not([disabled]):hover::part(native) {
+    background: #b95d69;
+    border-color: #b95d69;
+    color: #fff;
+  }
+
+  ion-button[color='primary']:not([disabled]):hover::part(native) {
+    background: #5276ad;
+    border-color: #5276ad;
+    color: #fff;
+  }
+
+  ion-button[color='warning']:not([disabled]):hover::part(native) {
+    background: #92752e;
+    border-color: #92752e;
+    color: #fff;
+  }
+
+  ion-button[color='dark']:not([disabled]):hover::part(native) {
+    background: #505d71;
+    border-color: #505d71;
+    color: #fff;
+  }
+
+  ion-button[color='medium']:not([disabled]):hover::part(native) {
+    background: #737b89;
+    border-color: #737b89;
+    color: #fff;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ion-button::part(native) {
+    transition: none;
+  }
+}

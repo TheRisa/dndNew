@@ -3,21 +3,22 @@
   <!-- Prossimo round -->
   <ion-button
     color="light"
-    class="button"
+    fill="solid"
+    class="button header-icon-button"
     (click)="homeSrvc.nextRound()"
     [disabled]="!homeSrvc.isPersonaggiCaricati()"
     ><ion-icon name="play-forward-outline"></ion-icon
   ></ion-button>
   <!-- Aggiungi personaggio -->
-  <ion-button color="light" class="button" (click)="openAddModal()"
+  <ion-button color="light" fill="solid" class="button header-icon-button" (click)="openAddModal()"
     ><ion-icon name="add-outline"></ion-icon
   ></ion-button>
   <!-- Export dati -->
-  <ion-button color="light" class="button" (click)="salva()"
+  <ion-button color="light" fill="solid" class="button header-icon-button" (click)="salva()"
     ><ion-icon name="save-outline"></ion-icon
   ></ion-button>
   <!-- Import dati -->
-  <ion-button color="light" class="button" (click)="carica()"
+  <ion-button color="light" fill="solid" class="button header-icon-button" (click)="carica()"
     ><ion-icon name="download-outline"></ion-icon
   ></ion-button>
 </div>
@@ -52,6 +53,7 @@
       <!-- perc = 0 è un valore ammesso -->
       <ion-button
         expand="block"
+        fill="solid"
         [disabled]="
           !personaggioAggiunto.nome || !personaggioAggiunto.percPerTurno
         "

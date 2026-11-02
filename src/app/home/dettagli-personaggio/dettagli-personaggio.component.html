@@ -1,34 +1,34 @@
 <!-- Container -->
 <div class="container default-black" *ngIf="personaggio">
-  <!-- Nome e abilità -->
-  <div class="nomeContainer">
-    <!-- Nome -->
-    <p class="name">{{ personaggio.nome }}</p>
-  </div>
   <!-- Effetti attivi & stats -->
   <div class="body">
     <!-- Display sinistro -->
-    <div class="half-body">
+    <div class="half-body detail-card">
       <!-- Sup & inf -->
       <div class="title">
-        Superiorità/Inferioità
+        <span class="title-label">Superiorità/Inferioità</span>
         <!-- Button di gestione sup/inf -->
-        <div class="buttons" style="margin-left: 20px">
+        <div class="buttons title-actions">
           <ion-button
             (click)="cambiaSup(true)"
             [disabled]="personaggio.isDead"
+            class="detail-positive"
+            fill="solid"
             color="success"
             >+</ion-button
           >
           <ion-button
             (click)="cambiaSup(false)"
             [disabled]="personaggio.isDead"
+            class="detail-negative"
+            fill="solid"
             color="danger"
             >-</ion-button
           >
           <ion-button
             (click)="resetSup()"
             [disabled]="personaggio.isDead"
+            fill="solid"
             color="medium"
             >Ø</ion-button
           >
@@ -36,14 +36,14 @@
       </div>
       <!-- Nessun sup/inf -->
       <p
-        style="width: 100%; text-align: center"
+        class="detail-copy"
         *ngIf="personaggio.superiorita === 0 && personaggio.inferiorita === 0"
       >
         Nessun livello di Superiorità o Inferioità
       </p>
       <!-- Sup/inf -->
       <p
-        style="width: 100%; text-align: center"
+        class="detail-copy"
         *ngIf="personaggio.superiorita !== 0 || personaggio.inferiorita !== 0"
       >
         {{
@@ -56,9 +56,12 @@
             ? personaggio.inferiorita + ' Inferiorità'
             : ''
         }}
-        <br />
-        <br />
-        Lancia {{ personaggio.superiorita + personaggio.inferiorita + 1 }} d20
+      </p>
+      <p
+        class="detail-copy"
+        *ngIf="personaggio.superiorita !== 0 || personaggio.inferiorita !== 0"
+      >
+        Lancia {{ personaggio.superiorita + personaggio.inferiorita + 1 }}d20
         <br *ngIf="personaggio.superiorita !== 0" />
         {{ calcolaDadoSup() }}
         <br *ngIf="personaggio.inferiorita !== 0" />
@@ -66,42 +69,41 @@
       </p>
 
       <!-- Padronanza/sfinimento -->
-      <div class="title">
-        Padronanza/Sfinimento
+      <div class="title title-padronanza">
+        <span class="title-label">Padronanza/Sfinimento</span>
         <!-- Button di gestione sup/inf -->
-        <div class="buttons" style="margin-left: 20px">
+        <div class="buttons title-actions">
           <ion-button
             (click)="cambiaPadronanza(true)"
             [disabled]="personaggio.isDead"
+            class="detail-positive"
+            fill="solid"
             color="success"
             >+</ion-button
           >
           <ion-button
             (click)="cambiaPadronanza(false)"
             [disabled]="personaggio.isDead"
+            class="detail-negative"
+            fill="solid"
             color="danger"
             >-</ion-button
           >
           <ion-button
             (click)="resetPadronanza()"
             [disabled]="personaggio.isDead"
+            fill="solid"
             color="medium"
             >Ø</ion-button
           >
         </div>
       </div>
       <!-- Nessun pad/sfin -->
-      <p
-        style="width: 100%; text-align: center"
-        *ngIf="personaggio.padronanza === 0"
-      >
+      <p class="detail-copy" *ngIf="personaggio.padronanza === 0">
         Nessun livello di Padronanza o Sfinimento
       </p>
       <!-- Padronanza/sfinimento -->
-      <p
-        style="width: 100%; text-align: center"
-        *ngIf="personaggio.padronanza !== 0"
-      >
+      <p class="detail-copy" *ngIf="personaggio.padronanza !== 0">
         {{
           personaggio.padronanza > 0
             ? personaggio.padronanza
@@ -110,32 +112,29 @@
         {{ personaggio.padronanza > 0 ? 'Padronanza' : 'Sfinimento' }}
       </p>
       <!-- Effetto padronanza -->
-      <p
-        style="width: 100%; text-align: center"
-        *ngIf="personaggio.padronanza !== 0"
-      >
+      <p class="detail-copy" *ngIf="personaggio.padronanza !== 0">
         {{ calcolaEffettoPadronanza(personaggio.padronanza) }}
       </p>
     </div>
 
     <!-- Effetti attivi -->
-    <div class="half-body">
+    <div class="half-body detail-card">
       <!-- Titolo -->
       <p class="title">
         Effetti attivi
         <ion-button
           [disabled]="personaggio.isDead"
+          class="effect-add"
           color="success"
-          id="open-modal"
+          fill="solid"
           expand="block"
-          style="margin-left: 20px"
+          (click)="apriModale()"
           >+</ion-button
         >
         <!-- Modale inline per aggiunta effetto -->
         <ion-modal
           class="modal"
           style="--height: 80%"
-          trigger="open-modal"
           (willDismiss)="onWillDismiss($event)"
         >
           <ng-template>
@@ -250,11 +249,12 @@
 
                 <!-- Pulsanti chiusura modale -->
                 <div class="buttonRowModale">
-                  <ion-button (click)="cancel()" color="danger"
+                  <ion-button (click)="cancel()" color="danger" fill="solid"
                     >Annulla</ion-button
                   >
                   <ion-button
                     (click)="confirm()"
+                    fill="solid"
                     color="dark"
                     [disabled]="
                       (getStatus(statusSelezionato)?.hasX &&
@@ -304,11 +304,12 @@
 
                 <!-- Pulsanti chiusura modale -->
                 <div class="buttonRowModale">
-                  <ion-button (click)="cancel()" color="danger"
+                  <ion-button (click)="cancel()" color="danger" fill="solid"
                     >Annulla</ion-button
                   >
                   <ion-button
                     (click)="confirm()"
+                    fill="solid"
                     color="dark"
                     [disabled]="
                       (!durataEffetto && !isPermanent) || !descrizioneEffetto
@@ -322,10 +323,7 @@
         </ion-modal>
       </p>
       <!-- Nessun effetto -->
-      <p
-        style="width: 100%; text-align: center"
-        *ngIf="personaggio.effettiAttivi.length === 0"
-      >
+      <p class="detail-copy" *ngIf="personaggio.effettiAttivi.length === 0">
         Nessun effetto attivo al momento
       </p>
       <!-- Effetto -->
@@ -347,6 +345,8 @@
           </p>
           <ion-button
             color="danger"
+            class="detail-negative"
+            fill="solid"
             (click)="rimuoviEffetto(indiceEffetto)"
             style="margin-left: 10px"
             >-</ion-button
