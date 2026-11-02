@@ -30,6 +30,22 @@
   color: #263248;
 }
 
+.modal-confirm-button {
+  display: block;
+  width: calc(100% - 32px);
+  height: 40px !important;
+  min-height: 40px !important;
+  margin: 16px;
+  --padding-start: 16px;
+  --padding-end: 16px;
+}
+
+.modal-confirm-button::part(native) {
+  width: 100%;
+  min-height: 40px;
+  white-space: normal;
+}
+
 @media screen and (max-width: 720px) {
   .container {
     margin-bottom: 12px;

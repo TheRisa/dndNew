@@ -57,6 +57,17 @@ export class BarraAzioniComponent implements OnInit {
   }
 
   /**
+   * Rende maiuscola la prima lettera di ogni parola del nome.
+   */
+  public capitalizzaNome(nome: string | undefined): void {
+    this.personaggioAggiunto.nome = nome
+      ? nome.replace(/(^|[\s'-])([^\s'-])/g, (_, separatore, lettera) =>
+          separatore + lettera.toLocaleUpperCase()
+        )
+      : nome;
+  }
+
+  /**
    * Metodo al click sul conferma nella modale
    */
   public aggiungiPersonaggio(): void {

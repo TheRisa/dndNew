@@ -37,7 +37,8 @@
         <ion-input
           type="text"
           placeholder="Nome personaggio"
-          [(ngModel)]="personaggioAggiunto.nome"
+          [ngModel]="personaggioAggiunto.nome"
+          (ngModelChange)="capitalizzaNome($event)"
         ></ion-input>
       </ion-item>
       <!-- Rapidità per turno -->
@@ -52,13 +53,15 @@
       <!-- Conferma -->
       <!-- perc = 0 è un valore ammesso -->
       <ion-button
+        class="modal-confirm-button"
         expand="block"
         fill="solid"
         [disabled]="
-          !personaggioAggiunto.nome || !personaggioAggiunto.percPerTurno
+          !personaggioAggiunto.nome ||
+          personaggioAggiunto.percPerTurno === undefined ||
+          personaggioAggiunto.percPerTurno === null
         "
         (click)="aggiungiPersonaggio()"
-        style="margin: 15px 10px"
         >Conferma
       </ion-button>
     </ion-content>
